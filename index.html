@@ -8929,30 +8929,53 @@ const QuizController = {
     
     updateMealsUI:function(){document.querySelectorAll('#meal-details .meal-day-section').forEach(s=>{const d=s.dataset.day,m=appState.profilClient.repas_par_jour[d]||[];s.querySelectorAll('.meal-time-card').forEach(c=>c.classList.toggle('selected',m.includes(c.dataset.meal)))})},
     
-    renderTypeTimePerMeal: function(q) {
-        const o = [{l:"⏱️ Express",v:"Express",d:"(< 15 min)"},{l:"🍳 Tranquille",v:"Tranquille",d:"(15-45 min)"},{l:"👨‍🍳 Passionné",v:"Passionné",d:"(> 45 min)"}];
-        const hasSelection = appState.profilClient[q.variable] && Object.keys(appState.profilClient[q.variable]).length > 0;
-        const disabledClass = hasSelection ? '' : 'is-disabled';
-        let h = `<div class="meal-day-section" style="margin-bottom:2rem"><h3 class="meal-day-title">⚡ Quel est votre style ?</h3><div class="answers" id="time-presets"><div class="answer-card" onclick="QuizController.applyTimePreset('pro_presse',this)"><h4>Le Pro pressé 🏃</h4><p style="font-size:.95rem;color:var(--text-secondary)">Je suis toujours pressé, tout doit être rapide.</p></div><div class="answer-card" onclick="QuizController.applyTimePreset('weekend_lover',this)"><h4>L'Épicurien du Week-end 🍷</h4><p style="font-size:.95rem;color:var(--text-secondary)">Rapide en semaine, mais passionné dès le vendredi soir.</p></div><div class="answer-card" onclick="QuizController.applyTimePreset('chef_cuisinier',this)"><h4>Le Chef Cuisinier 👨‍🍳</h4><p style="font-size:.95rem;color:var(--text-secondary)">Chaque repas est une occasion, je prends mon temps.</p></div></div></div><button class="action-button btn-pulse btn-personnaliser" style="margin-bottom:1rem" onclick="QuizController.toggleDetailView('time-details')">Personnaliser</button><button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion()">Suivant</button><div id="time-details" class="hidden-section" style="margin-top:2rem">`;
-        const r = appState.profilClient.repas_par_jour || {}, j = sortSelectedDays(Object.keys(r));
-        if (j.length === 0 || j.every(d => !r[d] || r[d].length === 0)) {
-            h += `<p style="text-align:center;padding:1rem">Veuillez sélectionner des repas d'abord.</p>`
-        } else {
-            j.forEach(d => {
-                if (r[d] && r[d].length > 0) {
-                    const e = daysOfWeek.find(i => i.name === d)?.emoji || '📅';
-                    h += `<div class="meal-day-section" data-day="${d}"><h3 class="meal-day-title">${e} ${d}</h3>`;
-                    r[d].forEach(m => {
-                        const c = appState.profilClient.temps_par_repas?.[d]?.[m] || 'Tranquille';
-                        h += `<div class="meal-time-group" data-day="${d}" data-meal="${m}"><h4 style="margin-bottom:.5rem;font-weight:600;color:var(--text-light);">${m === 'Midi' ? '☀️ Pour le midi :' : '🌙 Pour le soir :'}</h4><div class="meal-buttons">${o.map(opt => `<button class="meal-time-card ${c === opt.v ? 'selected' : ''}" data-value="${opt.v}" onclick="QuizController.selectTime(this,'${d}','${m}')">${opt.l.replace('⏱️ ', '').replace('🍳 ', '').replace('👨‍🍳 ', '')}<br><small>${opt.d}</small></button>`).join('')}</div></div>`
-                    });
-                    h += `</div>`
-                }
-            })
-        }
-        h += `<button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion()">Suivant</button>`;
-        return h + '</div>';
-    },
+// REMPLACEZ VOTRE FONCTION renderTypeTimePerMeal PAR CELLE-CI
+renderTypeTimePerMeal: function(q) {
+    const v = 'temps_par_repas'; // Le nom de la variable dans l'état
+    
+    // --- NOUVEAU BLOC D'INITIALISATION ---
+    // Si l'état pour cette question n'existe pas encore, on le pré-remplit
+    if (!appState.profilClient[v]) {
+        appState.profilClient[v] = {};
+        Object.keys(appState.profilClient.repas_par_jour).forEach(day => {
+            const meals = appState.profilClient.repas_par_jour[day] || [];
+            if (meals.length > 0) {
+                if (!appState.profilClient[v][day]) appState.profilClient[v][day] = {};
+                meals.forEach(meal => {
+                    // On assigne "Tranquille" comme choix par défaut pour chaque repas
+                    appState.profilClient[v][day][meal] = 'Tranquille';
+                });
+            }
+        });
+    }
+    // --- FIN DU NOUVEAU BLOC ---
+
+    const o = [{l:"⏱️ Express",v:"Express",d:"(< 15 min)"},{l:"🍳 Tranquille",v:"Tranquille",d:"(15-45 min)"},{l:"👨‍🍳 Passionné",v:"Passionné",d:"(> 45 min)"}];
+    
+    // Maintenant, cette vérification fonctionnera car l'état est pré-rempli
+    const hasSelection = appState.profilClient[v] && Object.keys(appState.profilClient[v]).length > 0;
+    const disabledClass = hasSelection ? '' : 'is-disabled';
+
+    let h = `<div class="meal-day-section" style="margin-bottom:2rem"><h3 class="meal-day-title">⚡ Quel est votre style ?</h3><div class="answers" id="time-presets"><div class="answer-card" onclick="QuizController.applyTimePreset('pro_presse',this)"><h4>Le Pro pressé 🏃</h4><p style="font-size:.95rem;color:var(--text-secondary)">Je suis toujours pressé, tout doit être rapide.</p></div><div class="answer-card" onclick="QuizController.applyTimePreset('weekend_lover',this)"><h4>L'Épicurien du Week-end 🍷</h4><p style="font-size:.95rem;color:var(--text-secondary)">Rapide en semaine, mais passionné dès le vendredi soir.</p></div><div class="answer-card" onclick="QuizController.applyTimePreset('chef_cuisinier',this)"><h4>Le Chef Cuisinier 👨‍🍳</h4><p style="font-size:.95rem;color:var(--text-secondary)">Chaque repas est une occasion, je prends mon temps.</p></div></div></div><button class="action-button btn-pulse btn-personnaliser" style="margin-bottom:1rem" onclick="QuizController.toggleDetailView('time-details')">Personnaliser</button><button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion(event)">Suivant</button><div id="time-details" class="hidden-section" style="margin-top:2rem">`;
+    const r = appState.profilClient.repas_par_jour || {}, j = sortSelectedDays(Object.keys(r));
+    if (j.length === 0 || j.every(d => !r[d] || r[d].length === 0)) {
+        h += `<p style="text-align:center;padding:1rem">Veuillez sélectionner des repas d'abord.</p>`
+    } else {
+        j.forEach(d => {
+            if (r[d] && r[d].length > 0) {
+                const e = daysOfWeek.find(i => i.name === d)?.emoji || '📅';
+                h += `<div class="meal-day-section" data-day="${d}"><h3 class="meal-day-title">${e} ${d}</h3>`;
+                r[d].forEach(m => {
+                    const c = appState.profilClient.temps_par_repas?.[d]?.[m] || 'Tranquille';
+                    h += `<div class="meal-time-group" data-day="${d}" data-meal="${m}"><h4 style="margin-bottom:.5rem;font-weight:600;color:var(--text-light);">${m === 'Midi' ? '☀️ Pour le midi :' : '🌙 Pour le soir :'}</h4><div class="meal-buttons">${o.map(opt => `<button class="meal-time-card ${c === opt.v ? 'selected' : ''}" data-value="${opt.v}" onclick="QuizController.selectTime(this,'${d}','${m}')">${opt.l.replace('⏱️ ', '').replace('🍳 ', '').replace('👨‍🍳 ', '')}<br><small>${opt.d}</small></button>`).join('')}</div></div>`
+                });
+                h += `</div>`
+            }
+        })
+    }
+    h += `<button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion(event)">Suivant</button>`;
+    return h + '</div>';
+},
 
     applyTimePreset: function(p, e) {
         document.querySelectorAll('#time-presets .answer-card').forEach(b => b.classList.remove('selected'));
