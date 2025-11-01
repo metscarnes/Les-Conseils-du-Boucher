@@ -1591,6 +1591,55 @@
                 content: '🌙 Soir:'; 
             }
         }
+/* --- CORRECTIONS POUR LE HEADER SUR MOBILE --- */
+        
+        /* On redéfinit le positionnement du header pour mieux contrôler les enfants */
+        .header {
+            position: relative; /* On s'assure qu'il reste le référent */
+            padding-top: 60px; /* On crée de l'espace en haut pour les boutons */
+            margin-bottom: 2rem; /* On ajuste la marge */
+        }
+
+        /* On déplace le conteneur des boutons */
+        .header-actions {
+            position: absolute;
+            top: 0; /* On le colle tout en haut */
+            left: 50%; /* On le centre horizontalement */
+            transform: translateX(-50%); /* Ajustement fin du centrage */
+            width: auto; /* Le conteneur prend la largeur de son contenu */
+        }
+        
+        /* On ajuste la taille du titre principal sur mobile */
+        h1#main-title {
+             font-size: 2.2rem; /* Un peu plus petit pour mieux s'adapter */
+        }
+/* --- CORRECTIONS POUR L'ÉCRAN D'ACCUEIL SUR MOBILE --- */
+        
+        .welcome-screen {
+            position: absolute; /* Change fixed en absolute pour permettre le scroll */
+            height: auto;       /* La hauteur s'adapte au contenu */
+            min-height: 100vh;  /* Assure qu'il remplit au moins l'écran */
+            padding: 4rem 0;    /* Ajoute de l'espace en haut et en bas */
+            overflow-y: auto;   /* Ajoute une barre de défilement SI nécessaire */
+        }
+        
+        .welcome-content {
+            padding: 2rem 1.5rem; /* On ajuste le padding pour les petits écrans */
+        }
+
+        .welcome-logo {
+            font-size: 5rem; /* On réduit un peu la taille du logo */
+        }
+
+        .welcome-title {
+            font-size: 2.5rem; /* Et du titre */
+            margin-bottom: 1.5rem;
+        }
+
+        .welcome-description {
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
 
         /* =====================================================
            ANIMATIONS SUPPLÉMENTAIRES POUR LE WOW FACTOR
@@ -8780,4 +8829,5 @@ function launchTutorial(steps) {
 </body>
 
 </html>
+
 
