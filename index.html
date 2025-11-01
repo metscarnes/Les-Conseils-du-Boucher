@@ -8644,13 +8644,17 @@ function launchTutorial(steps) {
             init: function() { backBtn.addEventListener('click', () => this.previousQuestion()); this.renderQuestion() },
             updateProgress: function() { const p = Math.round(appState.questionIndex / (questionsConfig.length - 1) * 100) || 0; progressBar.style.width = `${p}%`; progressText.textContent = `${p}%`; backBtn.style.display = appState.questionIndex > 0 ? 'flex' : 'none' },
             
-            renderQuestion: function() {
-                this.updateProgress(); 
-                const q = questionsConfig[appState.questionIndex]; 
-                if (!q) { this.generateResults(); return }
-                
-                let h = `<h2 class="question-title">${q.question}</h2><p class="question-helper">${q.helper || ''}</p>`;
-                switch (q.type) {
+// FONCTION CORRIGÉE
+        renderQuestion: function() {
+            this.updateProgress(); 
+            const q = questionsConfig[appState.questionIndex]; 
+            if (!q) { this.generateResults(); return }
+
+            // ✅ ON AJOUTE CETTE LIGNE ICI
+            window.scrollTo(0, 0);
+
+            let h = `<h2 class="question-title">${q.question}</h2><p class="question-helper">${q.helper || ''}</p>`;
+            switch (q.type) {
                     case 'text': h += this.renderTypeText(); break;
                     case 'meat_filter': h += this.renderTypeMeatFilter(); break;
                     case 'days': h += this.renderTypeDays(q); break;
@@ -8829,5 +8833,6 @@ function launchTutorial(steps) {
 </body>
 
 </html>
+
 
 
