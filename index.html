@@ -1292,12 +1292,18 @@
             font-style: italic;
         }
         
+/* ----- BLOC CSS FINAL POUR LES BOUTONS DE LA MODALE ----- */
+        
+        /* Conteneur principal des boutons */
         #modal-buttons { 
-            display: flex; 
-            gap: 1.2rem; 
-            justify-content: center; 
+            display: flex;
+            flex-direction: column; /* Affiche les boutons en colonne */
+            gap: 1rem; /* Espace entre les boutons */
+            margin-top: 3rem;
+            align-items: stretch; /* Les boutons prennent toute la largeur */
         }
         
+        /* Style général de TOUS les boutons dans la modale */
         .modal-btn { 
             padding: 1.1rem 2.5rem; 
             font-size: 1rem; 
@@ -1311,6 +1317,7 @@
             font-family: 'Loyola Pro Bold', serif;
         }
         
+        /* Style des boutons de confirmation (orange) */
         .modal-btn-confirm { 
             background: var(--accent); 
             color: var(--dark); 
@@ -1323,9 +1330,10 @@
             box-shadow: 0 8px 30px rgba(237, 193, 150, 0.5);
         }
         
+        /* Style du bouton d'annulation (transparent) */
         .modal-btn-cancel { 
             background: transparent; 
-            color: var(--text-light); /* AMÉLIORATION */
+            color: var(--text-light);
             border: 1px solid var(--border-subtle);
         }
         
@@ -1335,6 +1343,21 @@
             color: var(--primary);
         }
 
+        /* Style spécifique pour le bouton annuler quand il est seul en bas */
+        .modal-btn-cancel-standalone {
+            margin-top: 1rem; /* Ajoute un espace au-dessus pour le séparer visuellement */
+            background: transparent;
+            color: var(--text-secondary); /* Couleur plus discrète */
+            font-size: 0.9rem; /* Police légèrement plus petite */
+            padding: 0.8rem 2rem;
+            border: none;
+        }
+
+        .modal-btn-cancel-standalone:hover {
+            color: var(--primary);
+            background: none;
+            border: none;
+        }
         /* =====================================================
            CHAMPS DE FORMULAIRE (INPUT TEXT)
            ===================================================== */
@@ -8612,6 +8635,37 @@
         const sortSelectedDays=d=>d.sort((a,b)=>dayOrder.indexOf(a)-dayOrder.indexOf(b));
         function getQuantityDisplay(product, nbPersonnes) {let qteDisplay = '';if (product.unite && (product.unite.toLowerCase() === 'pièce' || product.unite.toLowerCase() === 'piece')) {const totalQte = nbPersonnes * (product.quantite_par_personne || 1);qteDisplay = `${totalQte} pièce${totalQte > 1 ? 's' : ''}`;} else {const totalQte = nbPersonnes * (product.quantite_par_personne || 150);qteDisplay = totalQte >= 1000 ? `${(totalQte / 1000).toFixed(2).replace('.',',')} kg` : `${totalQte} g`;}return qteDisplay;}
         
+// REMPLACEZ VOTRE FONCTION showCustomChoice PAR CELLE-CI
+function showCustomChoice({ title, text, option1Text, option2Text, cancelText }) {
+    return new Promise(resolve => {
+        modalTitle.textContent = title;
+        modalText.textContent = text;
+        modalButtons.innerHTML = ''; // On vide le conteneur
+
+        const option1Btn = document.createElement('button');
+        option1Btn.textContent = option1Text;
+        option1Btn.className = 'modal-btn modal-btn-confirm';
+        option1Btn.onclick = () => { modalOverlay.classList.remove('is-visible'); resolve('option1'); };
+
+        const option2Btn = document.createElement('button');
+        option2Btn.textContent = option2Text;
+        option2Btn.className = 'modal-btn modal-btn-confirm';
+        option2Btn.onclick = () => { modalOverlay.classList.remove('is-visible'); resolve('option2'); };
+
+        const cancelBtn = document.createElement('button');
+        cancelBtn.textContent = cancelText;
+        cancelBtn.className = 'modal-btn modal-btn-cancel modal-btn-cancel-standalone'; // Ajout d'une classe spécifique
+        cancelBtn.onclick = () => { modalOverlay.classList.remove('is-visible'); resolve(null); };
+
+        // On ajoute les boutons dans le bon ordre
+        modalButtons.appendChild(option1Btn);
+        modalButtons.appendChild(option2Btn);
+        modalButtons.appendChild(cancelBtn);
+        
+        modalOverlay.classList.add('is-visible');
+    });
+}
+
 // FONCTION CORRIGÉE
 function launchTutorial(steps) {
     const driverSteps = steps.map(step => ({
@@ -9040,15 +9094,25 @@ const QuizController = {
             }
         }
 
-        async function promptDownloadChoice() {
-            const choice = await showCustomConfirm({
-                title: "Quel format souhaitez-vous ?",
-                text: "Choisissez le type de PDF à télécharger.",
-                confirmText: "Résumé + Détails",
-                cancelText: "Résumé Uniquement"
-            });
-            downloadPDF(choice);
-        }
+       // REMPLACEZ VOTRE ANCIENNE FONCTION promptDownloadChoice PAR CELLE-CI
+async function promptDownloadChoice() {
+    const choice = await showCustomChoice({
+        title: "Quel format souhaitez-vous ?",
+        text: "Choisissez le type de PDF à télécharger.",
+        option1Text: "Résumé + Détails",
+        option2Text: "Résumé Uniquement",
+        cancelText: "Annuler"
+    });
+
+    // Si l'utilisateur clique sur "Annuler", choice sera `null` et on ne fait rien
+    if (choice === null) {
+        return; 
+    }
+
+    // On lance le téléchargement en fonction du choix
+    const includeDetails = (choice === 'option1');
+    downloadPDF(includeDetails);
+}
 
         async function downloadPDF(includeDetails = true) {
             const element = document.getElementById('pdf-content');
