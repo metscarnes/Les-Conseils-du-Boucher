@@ -8697,7 +8697,23 @@ function launchTutorial(steps) {
                 const j=sortSelectedDays(appState.profilClient.jours_selectionnes||[]);
                 j.forEach(jour=>{ const r=appState.profilClient.repas_par_jour[jour]||[]; if(r.length>0){ appState.generatedMenu[jour]={}; r.forEach(m=>{ let product; if(appState.isQuickStart){ const i=Math.floor(Math.random()*productPool.length); product=productPool[i] } else { if(productPool.length>0){ const i=Math.floor(Math.random()*productPool.length); product=productPool.splice(i,1)[0] } else { const i=Math.floor(Math.random()*allProducts.length); product=allProducts[i] } } appState.generatedMenu[jour][m]=product }) } });
                 
-                appContent.innerHTML = `<div class="results-header"><h2>Voici votre menu !</h2></div><div class="results-actions"><button class="btn-welcome btn-download" onclick="promptDownloadChoice()">📄 Télécharger</button><button class="btn-welcome btn-restart" onclick="resetQuiz()">🔄 Recommencer</button></div><div id="pdf-content">${this.renderPlanningTable()}<div class="pdf-details-section"><div class="results-grid">${this.renderResultsDetails()}</div></div></div>`;
+                appContent.innerHTML = `
+    <div class="results-header"><h2>Voici votre menu !</h2></div>
+    
+    <div class="results-actions">
+        <button class="btn-welcome btn-download" onclick="promptDownloadChoice()">📄 Télécharger</button>
+        <button class="btn-welcome btn-restart" onclick="resetQuiz()">🔄 Recommencer</button>
+    </div>
+    
+    <div id="pdf-content">${this.renderPlanningTable()}<div class="pdf-details-section"><div class="results-grid">${this.renderResultsDetails()}</div></div></div>
+
+    <!-- ✅ NOUVEAU BLOC DE BOUTONS AJOUTÉ ICI -->
+    <div class="results-footer-actions">
+        <button class="action-button" onclick="promptDownloadChoice()">📄 Télécharger</button>
+        <button class="action-button" onclick="resetQuiz()">🔄 Recommencer</button>
+        <button class="action-button scroll-to-top" onclick="scrollToTop()">↑ Revenir en haut</button>
+    </div>
+`;
                 this.attachTooltipEvents();
 
                 if (appState.profilClient.wantsTutorial) {
@@ -8705,7 +8721,7 @@ function launchTutorial(steps) {
                         launchTutorial(resultsTutorialSteps);
                     }, 200);
                 }
-            },
+            }
             
 renderTypeText: function() { const q = questionsConfig[appState.questionIndex]; const currentValue = appState.profilClient[q.variable] || ''; return `<div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem; margin-top: 2rem;"><input type="text" id="text-answer" placeholder="Votre prénom ici" value="${currentValue}" onkeydown="if(event.key === 'Enter') document.querySelector('.action-button').click()"><button class="action-button" onclick="QuizController.handleAnswer(document.getElementById('text-answer').value)">Valider et continuer</button></div>`; },
             
@@ -8886,10 +8902,19 @@ renderTypeText: function() { const q = questionsConfig[appState.questionIndex]; 
                 element.classList.remove('no-details');
             }
         }
+        // AJOUTEZ CETTE FONCTION À LA FIN DE VOTRE SCRIPT
+
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
     </script>
 </body>
 
 </html>
+
 
 
 
