@@ -8613,6 +8613,7 @@
         const sortSelectedDays=d=>d.sort((a,b)=>dayOrder.indexOf(a)-dayOrder.indexOf(b));
         function getQuantityDisplay(product, nbPersonnes) {let qteDisplay = '';if (product.unite && (product.unite.toLowerCase() === 'pièce' || product.unite.toLowerCase() === 'piece')) {const totalQte = nbPersonnes * (product.quantite_par_personne || 1);qteDisplay = `${totalQte} pièce${totalQte > 1 ? 's' : ''}`;} else {const totalQte = nbPersonnes * (product.quantite_par_personne || 150);qteDisplay = totalQte >= 1000 ? `${(totalQte / 1000).toFixed(2).replace('.',',')} kg` : `${totalQte} g`;}return qteDisplay;}
         
+// FONCTION CORRIGÉE
 function launchTutorial(steps) {
     const driverSteps = steps.map(step => ({
         element: step.element,
@@ -8634,7 +8635,13 @@ function launchTutorial(steps) {
         nextBtnText: 'Suivant',
         prevBtnText: 'Précédent',
         doneBtnText: 'Compris !',
-        steps: driverSteps
+        steps: driverSteps,
+
+        // ✅ ON AJOUTE CETTE OPTION ICI
+        onDestroyed: () => {
+            // On remonte tout en haut de la page quand le tutoriel est fermé.
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     });
 
     driverObj.drive();
@@ -8833,6 +8840,7 @@ function launchTutorial(steps) {
 </body>
 
 </html>
+
 
 
 
