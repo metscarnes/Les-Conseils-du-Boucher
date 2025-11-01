@@ -8996,7 +8996,38 @@ const QuizController = {
     
     async handleAnswer(a) { const q = questionsConfig[appState.questionIndex]; if (a === '' && q.type === 'text') { await showCustomAlert({ title: "Oups !", text: "Veuillez entrer votre prénom pour que je puisse personnaliser votre expérience." }); return; } appState.profilClient[q.variable] = a; await this.nextQuestion(); },
     
-    toggleDetailView: function(id) { document.getElementById(id)?.classList.toggle('visible') },
+// FONCTION CORRIGÉE ET AMÉLIORÉE
+toggleDetailView: function(id) {
+    const detailSection = document.getElementById(id);
+    if (!detailSection) return;
+
+    // On vérifie l'état AVANT de le changer
+    const isOpening = !detailSection.classList.contains('visible');
+
+    // On bascule la classe 'visible' pour ouvrir ou fermer
+    detailSection.classList.toggle('visible');
+
+    // On attend un tout petit peu pour que l'animation CSS commence
+    setTimeout(() => {
+        if (isOpening) {
+            // Si on ouvre, on scrolle jusqu'à la section de détails
+            detailSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start' // On aligne le HAUT de la section avec le HAUT de la vue
+            });
+        } else {
+            // Si on ferme, on scrolle jusqu'au bouton "Personnaliser"
+            // On trouve le bouton le plus proche au-dessus de la section
+            const triggerButton = detailSection.previousElementSibling.previousElementSibling;
+            if (triggerButton && triggerButton.classList.contains('btn-personnaliser')) {
+                triggerButton.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center' // On centre le bouton dans la vue pour un meilleur contexte
+                });
+            }
+        }
+    }, 100); // 100ms est un bon délai pour laisser le temps au CSS de démarrer
+},
     
     async nextQuestion() {
         // Find the "Next" button that was clicked
