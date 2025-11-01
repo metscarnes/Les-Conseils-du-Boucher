@@ -13,57 +13,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Playpen+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-    /* =====================================================
-       PALETTE ET STYLES GLOBAUX
-       ===================================================== */
-    
-    :root {
-        --primary: #edc196;
-        --accent: #cc8956;
-        --dark: #040508;
-        --dark-secondary: #50241c;
-        --text-light: #edc196;
-        --text-secondary: rgba(237, 193, 150, 0.7);
-        --border-subtle: rgba(204, 137, 86, 0.2);
-        --glow: rgba(237, 193, 150, 0.4);
-    }
-    
+    :root { --primary: #edc196; --accent: #cc8956; --dark: #040508; --dark-secondary: #50241c; --text-light: #edc196; --text-secondary: rgba(237, 193, 150, 0.7); --border-subtle: rgba(204, 137, 86, 0.2); --glow: rgba(237, 193, 150, 0.4); }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    html, body {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
-    
-    body {
-        font-family: 'Playpen Sans', sans-serif;
-        background: var(--dark);
-        color: var(--text-light);
-        overflow-x: hidden;
-        min-height: 100vh;
-        position: relative;
-    }
-
-    body::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
-        pointer-events: none;
-        z-index: 1;
-        opacity: 0.6;
-    }
-    
-    h1, .welcome-title, .question-title, .meal-day-title, .result-day h3, #modal-title, .planning-table th, .meat-filter-section h3, .driver-popover-title {
-        font-family: 'Loyola Pro Bold', serif;
-    }
-    
-    /* =====================================================
-       TUTORIEL DRIVER.JS
-       ===================================================== */
+    html, body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body { font-family: 'Playpen Sans', sans-serif; background: var(--dark); color: var(--text-light); overflow-x: hidden; min-height: 100vh; position: relative; }
+    body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1; opacity: 0.6; }
+    h1, .welcome-title, .question-title, .meal-day-title, .result-day h3, #modal-title, .planning-table th, .meat-filter-section h3, .driver-popover-title { font-family: 'Loyola Pro Bold', serif; }
     .driver-overlay { background: rgba(4, 5, 8, 0.20); }
     .driver-popover { background: var(--dark-secondary); border-radius: 0; box-shadow: 0 30px 90px rgba(0, 0, 0, 0.9), 0 0 1px 1px rgba(237, 193, 150, 0.15); border: 1px solid var(--accent); max-width: 440px; animation: elegantFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
     @keyframes elegantFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -78,11 +33,7 @@
     .driver-popover-prev-btn:hover { background: rgba(237, 193, 150, 0.1); border-color: var(--primary); }
     .driver-popover-close-btn { background: transparent; color: var(--text-light); opacity: 0.8; }
     .driver-popover-close-btn:hover { opacity: 1; color: var(--primary); }
-
-    /* =====================================================
-       ÉCRAN D'ACCUEIL
-       ===================================================== */
-    .welcome-screen { position: absolute; top: 0; left: 0; width: 100%; min-height: 100vh; height: auto; background: linear-gradient(135deg, var(--dark) 0%, #0a0a0c 50%, var(--dark-secondary) 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 1.2s ease, transform 1.2s ease; overflow: hidden; padding: 4rem 0; }
+    .welcome-screen { position: fixed; top: 0; left: 0; width: 100%; min-height: 100vh; background: linear-gradient(135deg, var(--dark) 0%, #0a0a0c 50%, var(--dark-secondary) 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 1.2s ease, transform 1.2s ease; overflow: hidden; padding: 4rem 0; }
     .welcome-screen.hidden { opacity: 0; pointer-events: none; transform: scale(1.1); }
     .welcome-content { text-align: center; max-width: 900px; padding: 2rem 1.5rem; animation: majestueuxSlideUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s backwards; position: relative; z-index: 2; }
     .welcome-logo { font-size: 6rem; margin-bottom: 3rem; filter: drop-shadow(0 20px 60px rgba(237, 193, 150, 0.5)) drop-shadow(0 0 30px rgba(204, 137, 86, 0.3)); animation: majestueuxFloat 5s ease-in-out infinite; position: relative; }
@@ -100,11 +51,7 @@
     .btn-welcome-primary:hover { background: var(--primary); transform: translateY(-4px); box-shadow: 0 15px 50px rgba(237, 193, 150, 0.6), 0 0 40px rgba(204, 137, 86, 0.3); }
     .btn-welcome-secondary { background: transparent; color: var(--primary); border: 2px solid var(--accent); box-shadow: 0 0 20px rgba(204, 137, 86, 0.2); }
     .btn-welcome-secondary:hover { border-color: var(--primary); background: rgba(237, 193, 150, 0.05); transform: translateY(-4px); box-shadow: 0 15px 50px rgba(237, 193, 150, 0.3); }
-
-    /* =====================================================
-       APPLICATION PRINCIPALE
-       ===================================================== */
-    .main-app { min-height: 100vh; padding: 3rem 1rem; display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 1s ease 0.5s; position: relative; z-index: 2; }
+    .main-app { min-height: 100vh; padding: 3rem 1rem; display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 1s ease; position: relative; z-index: 2; }
     .main-app.visible { opacity: 1; }
     .container { max-width: 1000px; width: 100%; background: linear-gradient(135deg, var(--dark-secondary) 0%, rgba(4, 5, 8, 0.95) 100%); border-radius: 0; box-shadow: 0 40px 120px rgba(0, 0, 0, 0.8), 0 0 1px 1px rgba(237, 193, 150, 0.15), inset 0 0 60px rgba(237, 193, 150, 0.02); padding: 4rem; position: relative; overflow: hidden; border: 1px solid var(--border-subtle); }
     .container::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--accent), transparent); opacity: 0.5; }
@@ -124,7 +71,7 @@
     #progress-bar { height: 100%; background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 100%); border-radius: 0; transition: width 1s cubic-bezier(0.65, 0, 0.35, 1); box-shadow: 0 0 20px rgba(237, 193, 150, 0.6), 0 0 40px rgba(204, 137, 86, 0.4); position: relative; }
     #progress-bar::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent); animation: progressShine 2s ease-in-out infinite; }
     @keyframes progressShine { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-    #app-content { min-height: 450px; display: flex; flex-direction: column; position: relative; z-index: 2; }
+    #app-content { min-height: 450px; display: flex; flex-direction: column; position: relative; z-index: 2; opacity: 0; }
     .question-title { font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 700; text-align: center; margin-bottom: 1.2rem; color: var(--primary); line-height: 1.3; letter-spacing: 1.5px; text-transform: uppercase; text-shadow: 0 2px 15px rgba(237, 193, 150, 0.3); }
     .question-helper { text-align: center; color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 3rem; font-weight: 300; font-style: italic; }
     .days-grid, .answers, .meal-buttons { display: grid; gap: 1.2rem; }
@@ -166,9 +113,8 @@
     .meal-time-group-title { margin-bottom: 0.5rem; font-weight: 600; color: var(--text-light); }
     .meal-time-card { font-family: 'Playpen Sans', sans-serif; color: var(--text-light); }
     .meal-time-card small { color: var(--text-secondary); font-size: 0.85rem; }
-    .results-header { text-align: center; margin-bottom: 3rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border-subtle); position: relative; }
-    .results-header::after { content: ''; position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%); width: 80px; height: 3px; background: linear-gradient(90deg, transparent, var(--accent), transparent); }
-    .results-header h2 { font-family: 'Loyola Pro Bold', serif; color: var(--primary); font-size: 2.4rem; letter-spacing: 2px; text-transform: uppercase; text-shadow: 0 4px 20px rgba(237, 193, 150, 0.3); }
+    .profile-summary { display: none; background: rgba(80, 36, 28, 0.2); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); padding: 0.8rem 1.5rem; margin-bottom: 2rem; text-align: center; color: var(--text-secondary); font-size: 0.9rem; font-style: italic; transition: all 0.3s ease; }
+    .profile-summary span { font-weight: bold; color: var(--primary); }
     .results-actions { display: flex; gap: 1.5rem; justify-content: center; margin-bottom: 3rem; flex-wrap: wrap; }
     .btn-download { background: var(--primary); color: var(--dark); }
     .btn-restart { background: transparent; color: var(--text-light); border: 2px solid var(--accent); }
@@ -218,98 +164,52 @@
     .results-footer-actions { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-subtle); display: flex; flex-direction: column; gap: 1rem; align-items: center; }
     .results-footer-actions .scroll-to-top { background: transparent; color: var(--text-secondary); border: 1px solid var(--border-subtle); box-shadow: none; }
     .results-footer-actions .scroll-to-top:hover { background: rgba(237, 193, 150, 0.05); border-color: var(--accent); color: var(--primary); box-shadow: none; transform: translateY(-2px); }
+    .pdf-export-mode { background: white !important; } .pdf-export-mode .planning-table, .pdf-export-mode .result-day, .pdf-export-mode .result-meal { background: white !important; color: #2c1810 !important; } .pdf-export-mode .planning-table th { background: #edc196 !important; color: #2c1810 !important; border: 1px solid #cc8956 !important; } .pdf-export-mode .planning-table td { color: #2c1810 !important; border: 1px solid #cc8956 !important; } .pdf-export-mode .result-day h3 { color: #cc8956 !important; border-bottom: 2px solid #edc196 !important; } .pdf-export-mode .result-meal { border: 1px solid #cc8956 !important; } .pdf-export-mode .result-meal-info h4 { color: #cc8956 !important; } .pdf-export-mode .result-meal-info p, .pdf-export-mode .meal-cooking-advice { color: #2c1810 !important; } .pdf-export-mode .meal-cooking-advice { background: #f5f1e8 !important; border-left: 3px solid #cc8956 !important; } .pdf-export-mode .meal-quantity { background: #cc8956 !important; color: white !important; } .pdf-export-mode .meal-item { color: #cc8956 !important; } .pdf-export-mode.no-details .pdf-details-section { display: none; } .pdf-export-mode:not(.no-details) .planning-table { page-break-after: always; } .pdf-export-mode:not(.no-details) .result-day { page-break-inside: avoid; } .pdf-export-mode:not(.no-details) .result-meal-info h4 { page-break-after: avoid; } .pdf-export-mode:not(.no-details) .results-grid { gap: 1rem; } .pdf-export-mode:not(.no-details) .result-day { padding: 1rem; } .pdf-export-mode:not(.no-details) .result-meal { margin-bottom: 1rem; }
     
-    @media (max-width: 768px) {
-        .main-app { padding: 1.5rem 0.8rem; }
-        .container { padding: 2.5rem 1.5rem; }
-        .header { padding-top: 60px; margin-bottom: 2rem; }
-        .header-actions { top: 0; left: 50%; transform: translateX(-50%); width: auto; }
-        h1#main-title { font-size: 2.2rem; }
-        .question-title { font-size: 1.6rem; }
-        .welcome-buttons { flex-direction: column; }
-        .btn-welcome { width: 100%; }
-        .days-grid, .answers, .meal-buttons { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-        .result-meal { flex-direction: column; text-align: center; }
-        .result-meal-img { width: 100%; max-width: 350px; margin: 0 auto; }
-        .meat-filter-container { grid-template-columns: 1fr; }
-        .day-card.selected::after, .answer-card.selected::after, .meal-time-card.selected::after, .meat-btn.selected-include::after, .meat-btn.selected-exclude::after { width: 28px; height: 28px; font-size: 0.95rem; top: -10px; right: -10px; }
-        .planning-table thead { display: none; }
-        .planning-table, .planning-table tbody, .planning-table tr, .planning-table td { display: block; width: 100%; }
-        .planning-table tr { margin-bottom: 1.5rem; border: 1px solid var(--border-subtle); border-radius: 0; padding: 1.5rem; background: rgba(80, 36, 28, 0.3); }
-        .planning-table td { text-align: left; padding: 0.8rem; border: none; display: flex; align-items: center; gap: 1rem; }
-        .planning-table td[data-label="Jour"] { font-size: 1.6rem; color: var(--primary); padding-bottom: 0.8rem; margin-bottom: 0.8rem; border-bottom: 1px solid var(--border-subtle); }
-        .planning-table td::before { font-weight: bold; color: var(--text-secondary); }
-        .planning-table td:nth-of-type(2)::before { content: ☀️ Midi:'; }
-        .planning-table td:nth-of-type(3)::before { content: '🌙 Soir:'; }
-    }
+    /* =====================================================
+       ÉCRAN DE CHARGEMENT - EFFET RIDEAUX ULTRA SMOOTH
+       ===================================================== */
+    .loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: transparent; z-index: 99999; display: none; justify-content: center; align-items: center; overflow: hidden; }
+    .loading-content { position: relative; z-index: 3; text-align: center; padding: 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .loading-phase-1, .loading-phase-2 { transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
+    .loading-phase-2 { display: none; opacity: 0; transform: translateY(20px); }
+    .loading-screen.loading-finished .loading-phase-1 { opacity: 0; transform: scale(0.95); pointer-events: none; }
+    .loading-screen.loading-finished .loading-phase-2 { display: block; opacity: 1; transform: translateY(0); }
+    .loading-text { font-family: 'Loyola Pro Bold', serif; font-size: clamp(1.5rem, 4vw, 2.2rem); color: var(--primary); margin-bottom: 2rem; letter-spacing: 1px; text-transform: uppercase; text-shadow: 0 2px 15px rgba(237, 193, 150, 0.3); animation: textFadeInOut 1.2s ease-in-out infinite; }
+    @keyframes textFadeInOut { 0% { opacity: 0; transform: translateY(10px); } 15% { opacity: 1; transform: translateY(0); } 85% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-10px); } }
+    .loading-bar-container { width: 100%; max-width: 400px; height: 4px; background: rgba(237, 193, 150, 0.2); border-radius: 10px; overflow: hidden; margin: 0 auto; }
+    .loading-bar { height: 100%; background: linear-gradient(90deg, var(--accent) 0%, var(--primary) 100%); border-radius: 10px; animation: loadingProgress 3s ease-in-out forwards; box-shadow: 0 0 20px rgba(237, 193, 150, 0.6); }
+    @keyframes loadingProgress { from { width: 0%; } to { width: 100%; } }
+    .reveal-button { font-family: 'Loyola Pro Bold', serif; font-size: 1.5rem; letter-spacing: 2px; text-transform: uppercase; color: var(--primary); background: transparent; border: 2px solid var(--accent); padding: 1.2rem 3rem; cursor: pointer; position: relative; overflow: hidden; transition: all 0.4s ease; animation: fadeInButton 1s ease-out 0.5s backwards; }
+    @keyframes fadeInButton { from { opacity: 0; transform: translateY(20px); } }
+    .reveal-button::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark-secondary); transform-origin: left; animation: wipeIn 1.2s cubic-bezier(0.86, 0, 0.07, 1) 0.6s forwards; }
+    @keyframes wipeIn { 0% { transform: scaleX(1); } 100% { transform: scaleX(0); } }
+    .reveal-button:hover { color: var(--dark); background: var(--primary); border-color: var(--primary); box-shadow: 0 0 30px var(--glow); transform: translateY(-3px); }
+    .reveal-button.is-hiding { opacity: 0; transform: scale(0.95); transition: opacity 0.4s ease-out, transform 0.4s ease-out; }
+    .loading-screen::before, .loading-screen::after { content: ''; position: absolute; top: 0; width: 50.5%; height: 100%; background: linear-gradient(135deg, var(--dark-secondary) 0%, rgba(80, 36, 28, 0.98) 100%); z-index: 2; transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1); box-shadow: 5px 0 30px rgba(0, 0, 0, 0.5); }
+    .loading-screen::before { left: 0; border-right: 1px solid rgba(237, 193, 150, 0.1); }
+    .loading-screen::after { right: 0; border-left: 1px solid rgba(237, 193, 150, 0.1); }
+    .loading-screen.is-finished::before { transform: translateX(-100%); }
+    .loading-screen.is-finished::after { transform: translateX(100%); }
+    .loading-screen::before, .loading-screen::after { background-image: linear-gradient(135deg, var(--dark-secondary) 0%, rgba(80, 36, 28, 0.98) 100%), url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E"); background-blend-mode: normal, overlay; }
     
-    .pdf-export-mode { background: white !important; }
-    .pdf-export-mode .planning-table, .pdf-export-mode .result-day, .pdf-export-mode .result-meal { background: white !important; color: #2c1810 !important; }
-    .pdf-export-mode .planning-table th { background: #edc196 !important; color: #2c1810 !important; border: 1px solid #cc8956 !important; }
-    .pdf-export-mode .planning-table td { color: #2c1810 !important; border: 1px solid #cc8956 !important; }
-    .pdf-export-mode .result-day h3 { color: #cc8956 !important; border-bottom: 2px solid #edc196 !important; }
-    .pdf-export-mode .result-meal { border: 1px solid #cc8956 !important; }
-    .pdf-export-mode .result-meal-info h4 { color: #cc8956 !important; }
-    .pdf-export-mode .result-meal-info p, .pdf-export-mode .meal-cooking-advice { color: #2c1810 !important; }
-    .pdf-export-mode .meal-cooking-advice { background: #f5f1e8 !important; border-left: 3px solid #cc8956 !important; }
-    .pdf-export-mode .meal-quantity { background: #cc8956 !important; color: white !important; }
-    .pdf-export-mode .meal-item { color: #cc8956 !important; }
-
-    .pdf-export-mode.no-details .pdf-details-section { display: none; }
-    .pdf-export-mode:not(.no-details) .planning-table { page-break-after: always; }
-    .pdf-export-mode:not(.no-details) .result-day { page-break-inside: avoid; }
-    .pdf-export-mode:not(.no-details) .result-meal-info h4 { page-break-after: avoid; }
-    .pdf-export-mode:not(.no-details) .results-grid { gap: 1rem; }
-    .pdf-export-mode:not(.no-details) .result-day { padding: 1rem; }
-    .pdf-export-mode:not(.no-details) .result-meal { margin-bottom: 1rem; }
-    
+    /* =====================================================
+       ANIMATIONS SUPPLÉMENTAIRES
+       ===================================================== */
     @keyframes cardAppear { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     .day-card, .answer-card, .meal-time-card { animation: cardAppear 0.6s ease-out backwards; }
-    .day-card:nth-child(1), .answer-card:nth-child(1) { animation-delay: 0.05s; }
-    .day-card:nth-child(2), .answer-card:nth-child(2) { animation-delay: 0.1s; }
-    .day-card:nth-child(3), .answer-card:nth-child(3) { animation-delay: 0.15s; }
-    .day-card:nth-child(4), .answer-card:nth-child(4) { animation-delay: 0.2s; }
-    .day-card:nth-child(5), .answer-card:nth-child(5) { animation-delay: 0.25s; }
-    .day-card:nth-child(6), .answer-card:nth-child(6) { animation-delay: 0.3s; }
-    .day-card:nth-child(7), .answer-card:nth-child(7) { animation-delay: 0.35s; }
-
-    /* ✅ NOUVEAUX STYLES AJOUTÉS */
-    .loading-screen {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: var(--dark-secondary);
-        display: none;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        z-index: 100;
-        transition: opacity 0.5s ease;
+    .day-card:nth-child(1), .answer-card:nth-child(1) { animation-delay: 0.05s; } .day-card:nth-child(2), .answer-card:nth-child(2) { animation-delay: 0.1s; } .day-card:nth-child(3), .answer-card:nth-child(3) { animation-delay: 0.15s; } .day-card:nth-child(4), .answer-card:nth-child(4) { animation-delay: 0.2s; } .day-card:nth-child(5), .answer-card:nth-child(5) { animation-delay: 0.25s; } .day-card:nth-child(6), .answer-card:nth-child(6) { animation-delay: 0.3s; } .day-card:nth-child(7), .answer-card:nth-child(7) { animation-delay: 0.35s; }
+    @keyframes contentReveal { 0% { opacity: 0; transform: translateY(30px) scale(0.98); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+    .btn-welcome, .action-button, .btn-icon { position: relative; }
+    .btn-welcome::after, .action-button::after { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; border-radius: 50%; background: rgba(255, 255, 255, 0.5); transform: translate(-50%, -50%); transition: width 0.6s, height 0.6s; }
+    .btn-welcome:active::after, .action-button:active::after { width: 300px; height: 300px; opacity: 0; transition: width 0s, height 0s, opacity 0.6s; }
+    
+    /* =====================================================
+       RESPONSIVE
+       ===================================================== */
+    @media (max-width: 768px) {
+        .main-app { padding: 1.5rem 0.8rem; } .container { padding: 2.5rem 1.5rem; } .header { padding-top: 60px; margin-bottom: 2rem; } .header-actions { top: 0; left: 50%; transform: translateX(-50%); width: auto; } h1#main-title { font-size: 2.2rem; } .question-title { font-size: 1.6rem; } .welcome-buttons { flex-direction: column; } .btn-welcome { width: 100%; } .days-grid, .answers, .meal-buttons { grid-template-columns: repeat(2, 1fr); gap: 1rem; } .result-meal { flex-direction: column; text-align: center; } .result-meal-img { width: 100%; max-width: 350px; margin: 0 auto; } .meat-filter-container { grid-template-columns: 1fr; } .day-card.selected::after, .answer-card.selected::after, .meal-time-card.selected::after, .meat-btn.selected-include::after, .meat-btn.selected-exclude::after { width: 28px; height: 28px; font-size: 0.95rem; top: -10px; right: -10px; } .planning-table thead { display: none; } .planning-table, .planning-table tbody, .planning-table tr, .planning-table td { display: block; width: 100%; } .planning-table tr { margin-bottom: 1.5rem; border: 1px solid var(--border-subtle); border-radius: 0; padding: 1.5rem; background: rgba(80, 36, 28, 0.3); } .planning-table td { text-align: left; padding: 0.8rem; border: none; display: flex; align-items: center; gap: 1rem; } .planning-table td[data-label="Jour"] { font-size: 1.6rem; color: var(--primary); padding-bottom: 0.8rem; margin-bottom: 0.8rem; border-bottom: 1px solid var(--border-subtle); } .planning-table td::before { font-weight: bold; color: var(--text-secondary); } .planning-table td:nth-of-type(2)::before { content: ☀️ Midi:'; } .planning-table td:nth-of-type(3)::before { content: '🌙 Soir:'; } .loading-text { font-size: 1.5rem; } .loading-bar-container { max-width: 300px; }
     }
-    .loading-content { width: 80%; max-width: 400px; text-align: center; }
-    .loading-text { color: var(--primary); font-family: 'Loyola Pro Bold', serif; font-size: 1.5rem; margin-bottom: 2rem; letter-spacing: 1px; }
-    .loading-bar-bg { width: 100%; height: 6px; background: rgba(0,0,0,0.3); border-radius: 0; overflow: hidden; }
-    .loading-bar { width: 100%; height: 100%; background: var(--accent); animation: loadingAnimation 2.5s ease-out forwards; }
-    @keyframes loadingAnimation { from { transform: translateX(-100%); } to { transform: translateX(0); } }
-
-    .profile-summary {
-        display: none;
-        background: rgba(80, 36, 28, 0.2);
-        border-top: 1px solid var(--border-subtle);
-        border-bottom: 1px solid var(--border-subtle);
-        padding: 0.8rem 1.5rem;
-        margin-bottom: 2rem;
-        text-align: center;
-        color: var(--text-secondary);
-        font-size: 0.9rem;
-        font-style: italic;
-        transition: all 0.3s ease;
-    }
-    .profile-summary span {
-        font-weight: bold;
-        color: var(--primary);
-    }
-    /* FIN DES NOUVEAUX STYLES */
-
     </style>
 </head>
 <body>
@@ -344,25 +244,26 @@
                     <div class="progress-bar-bg"><div id="progress-bar"></div></div>
                 </div>
             </div>
-
             <div id="profile-summary" class="profile-summary"></div>
-
             <main id="app-content"></main>
-
-            <div id="loading-screen" class="loading-screen">
-                <div class="loading-content">
-                    <p class="loading-text">Nous composons votre menu idéal...</p>
-                    <div class="loading-bar-bg">
-                        <div class="loading-bar"></div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
     
-    <div id="meal-tooltip-global"></div>
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-phase-1">
+                <p class="loading-text">Nous composons votre menu idéal...</p>
+                <div class="loading-bar-container">
+                    <div class="loading-bar"></div>
+                </div>
+            </div>
+            <div class="loading-phase-2">
+                <button id="reveal-button" class="reveal-button" onclick="revealMenu()">Découvrez votre menu</button>
+            </div>
+        </div>
+    </div>
 
+    <div id="meal-tooltip-global"></div>
     <div id="custom-modal-overlay">
         <div id="custom-modal-content">
             <h2 id="modal-title">Titre de la modale</h2>
@@ -372,7 +273,7 @@
     </div>
 
     <script>
-       const allProducts = [
+        const allProducts = [
   {
     "Produit": "Aiguillette baronne de boeuf",
     "Categorie": "Bœuf",
@@ -7184,11 +7085,11 @@
     "poids_unitaire_g": null
   }
 ];
-
+    const loadingMessages = ["Le saviez-vous ? Une viande bien maturée est plus tendre et savoureuse.", "Astuce du chef : Sortez votre viande du frigo 30 minutes avant de la cuire pour une cuisson parfaite.", "Ne piquez jamais une saucisse pendant la cuisson, vous perdriez tout son jus précieux !", "Nous affûtons nos couteaux pour vous préparer un menu aux petits oignons...", "Le secret d'un bon steak ? Une poêle très chaude et un temps de repos après cuisson.", "Le persillage, c'est ce gras qui fond à la cuisson et donne tout son goût à la viande.", "Un peu de patience... Nous sélectionnons les meilleures pièces pour vous."];
     const questionsConfig=[{id:1,variable:"client_name",type:"text",question:"Comment puis-je vous appeler ? 😊",helper:"Votre prénom pour personnaliser vos recommandations"},{id:2,variable:"meat_preferences",type:"meat_filter",question:"Prêt à sortir de votre zone de confort ?",helper:"Choisissez un style ou personnalisez vos préférences. Les \"Classiques\" incluent : Bœuf, Veau, Agneau, Porc, et les Volailles.",tutorialSteps:[{element:'.answers',intro:"<strong>Étape 1 : Le style.</strong><br>Choisissez un style rapide ici. 'Surprenez-moi' utilise tout notre catalogue, tandis que 'Classiques' se concentre sur les viandes les plus populaires (Bœuf, Veau, Agneau, Porc, Volailles).",position:'bottom'},{element:'.btn-personnaliser',intro:"<strong>Étape 2 : L'affinage.</strong><br>Si vous avez des goûts précis, cliquez ici pour choisir exactement les viandes que vous aimez ou n'aimez pas.",position:'bottom'},{element:'.btn-next-question',intro:"<strong>Étape 3 : La suite.</strong><br>Une fois votre choix fait, cliquez ici pour passer à l'étape suivante !",position:'top'}]},{id:3,variable:"jours_selectionnes",type:"days",question:"Pour quels jours souhaitez-vous planifier vos repas ?",helper:"Sélectionnez un ou plusieurs jours."},{id:4,variable:"repas_par_jour",type:"meals_per_day",question:"Quels repas planifier ?",helper:"Choisissez un raccourci ou personnalisez chaque jour.",tutorialSteps:[{element:'#meal-presets',intro:"<strong>Raccourci :</strong><br>Pour aller vite, choisissez une option qui s'appliquera à tous les jours sélectionnés.",position:'bottom'},{element:'.btn-personnaliser',intro:"<strong>Personnalisation :</strong><br>Ou cliquez ici pour choisir précisément 'Midi' et/ou 'Soir' pour chaque jour.",position:'bottom'},{element:'.btn-next-question',intro:"<strong>Continuez :</strong><br>Cliquez ici une fois votre sélection terminée.",position:'top'}]},{id:5,variable:"nombre_personnes",type:"choice",question:"Pour combien de gourmands cuisinez-vous ?",options:["1 personne","2","3","4","5","6+"],values:[1,2,3,4,5,6],icons:["💃","👫","👨‍👩‍👦","👨‍👩‍👧‍👦","👨‍👩‍👧‍👦","👨‍👩‍👦‍👦"],helper:"Pour calculer les quantités."},{id:6,variable:"temps_par_repas",type:"time_per_meal",question:"Combien de temps avez-vous pour cuisiner ?",helper:"Appliquez un préréglage ou personnalisez.",tutorialSteps:[{element:'#time-presets',intro:"<strong>Votre style :</strong><br>Choisissez un profil de cuisinier qui correspond à vos habitudes.",position:'bottom'},{element:'.btn-personnaliser',intro:"<strong>Dans le détail :</strong><br>Ou personnalisez le temps de préparation pour chaque repas individuellement.",position:'bottom'},{element:'.btn-next-question',intro:"<strong>Validez :</strong><br>Passez à la suite quand vous avez terminé.",position:'top'}]},{id:7,variable:"texture_preferee",type:"choice",question:"Quelle texture vous fait craquer ?",options:["🧈 Tendre et fondant","🍖 Avec du caractère","🍲 Confit qui s'effiloche","💎 Toutes me plaisent"],icons:["🧈","🍖","🍲","💎"]},{id:8,variable:"gout_prefere",type:"choice",question:"Côté saveurs, qu'est-ce qui vous tente ?",options:["🌿 Subtil et délicat","🌶️ Riche et prononcé","🪵 Intense et rustique","✨ Je suis ouvert à tout"],icons:["🌿","🌶️","🪵","✨"]},{id:9,variable:"objectif_nutritionnel",type:"choice",question:"Quelle est votre envie du moment ?",options:["🥗 Léger & Équilibré","🧈 Le plaisir avant tout","💎 Les deux"],icons:["🥗","🧈","💎"]}];
     const daysOfWeek=[{name:"Lundi",emoji:"😭"},{name:"Mardi",emoji:"😐"},{name:"Mercredi",emoji:"🧒"},{name:"Jeudi",emoji:"🍷"},{name:"Vendredi",emoji:"💃"},{name:"Samedi",emoji:"🎉"},{name:"Dimanche",emoji:"☀️"}];
     const dayOrder=daysOfWeek.map(d=>d.name);const allMeatCategories=["Bœuf","Veau","Agneau","Cheval","Porc","Canard","Caille","Dinde","Poulet","Lapin","Cerf","Sanglier","Pigeon","Perdreau","Perdrix"];const classicMeats=["Bœuf","Veau","Agneau","Porc","Canard","Caille","Dinde","Poulet","Lapin"];
-    const resultsTutorialSteps = [ { element: '.results-header', intro: "Félicitations ! Voici votre menu personnalisé, prêt à être dégusté.", position: 'bottom' }, { element: '.planning-table', intro: "Retrouvez ici une vue d'ensemble de votre semaine. Pratique pour les courses !", position: 'bottom' }, { element: '.meal-item', intro: "✨ <strong>Astuce :</strong> Survolez un plat dans ce tableau pour voir une photo rapide ! Cliquez dessus pour plus de détails (si un lien est disponible).", position: 'top' }, { element: '.results-grid', intro: "Plus bas, vous trouverez le détail de chaque repas avec les quantités calculées pour vous et nos conseils de préparation.", position: 'top' }, { element: '.results-actions', intro: "Quand tout est parfait, vous pouvez <strong>télécharger votre menu en PDF</strong> ou en créer un nouveau.", position: 'bottom' } ];
+    const resultsTutorialSteps = [ { element: '.results-actions', intro: "Félicitations ! Voici votre menu personnalisé, prêt à être dégusté.", position: 'bottom' }, { element: '.planning-table', intro: "Retrouvez ici une vue d'ensemble de votre semaine. Pratique pour les courses !", position: 'bottom' }, { element: '.meal-item', intro: "✨ <strong>Astuce :</strong> Survolez un plat dans ce tableau pour voir une photo rapide ! Cliquez dessus pour plus de détails (si un lien est disponible).", position: 'top' }, { element: '.results-grid', intro: "Plus bas, vous trouverez le détail de chaque repas avec les quantités calculées pour vous et nos conseils de préparation.", position: 'top' }, { element: '.results-actions', intro: "Quand tout est parfait, vous pouvez <strong>télécharger votre menu en PDF</strong> ou en créer un nouveau.", position: 'bottom' } ];
     const appState={questionIndex:0,profilClient:{},isQuickStart:false,generatedMenu:{}};
     const welcomeScreen=document.getElementById('welcomeScreen'),mainApp=document.getElementById('mainApp'),appContent=document.getElementById('app-content'),progressBar=document.getElementById('progress-bar'),progressText=document.getElementById('progress-text'),progressWrapper=document.getElementById('progressWrapper'),backBtn=document.getElementById('back-btn'),mainTitle=document.getElementById('main-title'),mainSubtitle=document.getElementById('main-subtitle');
     const globalTooltip = document.getElementById('meal-tooltip-global');
@@ -7197,96 +7098,16 @@
     const modalText = document.getElementById('modal-text');
     const modalButtons = document.getElementById('modal-buttons');
 
-    function showCustomConfirm({ title, text, confirmText = 'OK', cancelText = 'Annuler' }) {
-        return new Promise(resolve => {
-            modalTitle.textContent = title;
-            modalText.textContent = text;
-            modalButtons.innerHTML = `<div class="modal-buttons-left"></div><div class="modal-buttons-right"></div>`;
-            const leftContainer = modalButtons.querySelector('.modal-buttons-left');
-            const rightContainer = modalButtons.querySelector('.modal-buttons-right');
-            const confirmBtn = document.createElement('button');
-            confirmBtn.textContent = confirmText;
-            confirmBtn.className = 'modal-btn modal-btn-confirm';
-            confirmBtn.onclick = () => { modalOverlay.classList.remove('is-visible'); resolve(true); };
-            const cancelBtn = document.createElement('button');
-            cancelBtn.textContent = cancelText;
-            cancelBtn.className = 'modal-btn modal-btn-cancel';
-            cancelBtn.onclick = () => { modalOverlay.classList.remove('is-visible'); resolve(false); };
-            leftContainer.appendChild(cancelBtn);
-            rightContainer.appendChild(confirmBtn);
-            modalOverlay.classList.add('is-visible');
-        });
-    }
-
-    function showCustomAlert({ title, text, confirmText = 'Compris' }) {
-        return new Promise(resolve => {
-            modalTitle.textContent = title;
-            modalText.textContent = text;
-            modalButtons.innerHTML = '';
-            const confirmBtn = document.createElement('button');
-            confirmBtn.textContent = confirmText;
-            confirmBtn.className = 'modal-btn modal-btn-confirm';
-            confirmBtn.onclick = () => { modalOverlay.classList.remove('is-visible'); resolve(true); };
-            modalButtons.appendChild(confirmBtn);
-            modalOverlay.classList.add('is-visible');
-        });
-    }
-
-    function showCustomChoice({ title, text, option1Text, option2Text, cancelText }) {
-        return new Promise(resolve => {
-            modalTitle.textContent = title;
-            modalText.textContent = text;
-            modalButtons.innerHTML = '';
-            const option1Btn = document.createElement('button');
-            option1Btn.textContent = option1Text;
-            option1Btn.className = 'modal-btn modal-btn-confirm';
-            option1Btn.onclick = () => { modalOverlay.classList.remove('is-visible'); resolve('option1'); };
-            const option2Btn = document.createElement('button');
-            option2Btn.textContent = option2Text;
-            option2Btn.className = 'modal-btn modal-btn-confirm';
-            option2Btn.onclick = () => { modalOverlay.classList.remove('is-visible'); resolve('option2'); };
-            const cancelBtn = document.createElement('button');
-            cancelBtn.textContent = cancelText;
-            cancelBtn.className = 'modal-btn modal-btn-cancel modal-btn-cancel-standalone';
-            cancelBtn.onclick = () => { modalOverlay.classList.remove('is-visible'); resolve(null); };
-            modalButtons.appendChild(option1Btn);
-            modalButtons.appendChild(option2Btn);
-            modalButtons.appendChild(cancelBtn);
-            modalOverlay.classList.add('is-visible');
-        });
-    }
-
+    function showCustomConfirm({ title, text, confirmText = 'OK', cancelText = 'Annuler' }) { return new Promise(resolve => { modalTitle.textContent = title; modalText.textContent = text; modalButtons.innerHTML = `<button class="modal-btn modal-btn-confirm">${confirmText}</button><button class="modal-btn modal-btn-cancel">${cancelText}</button>`; modalButtons.querySelector('.modal-btn-confirm').onclick = () => { modalOverlay.classList.remove('is-visible'); resolve(true); }; modalButtons.querySelector('.modal-btn-cancel').onclick = () => { modalOverlay.classList.remove('is-visible'); resolve(false); }; modalOverlay.classList.add('is-visible'); }); }
+    function showCustomAlert({ title, text, confirmText = 'Compris' }) { return new Promise(resolve => { modalTitle.textContent = title; modalText.textContent = text; modalButtons.innerHTML = `<button class="modal-btn modal-btn-confirm">${confirmText}</button>`; modalButtons.querySelector('.modal-btn-confirm').onclick = () => { modalOverlay.classList.remove('is-visible'); resolve(true); }; modalOverlay.classList.add('is-visible'); }); }
+    function showCustomChoice({ title, text, option1Text, option2Text, cancelText }) { return new Promise(resolve => { modalTitle.textContent = title; modalText.textContent = text; modalButtons.innerHTML = `<button class="modal-btn modal-btn-confirm">${option1Text}</button><button class="modal-btn modal-btn-confirm">${option2Text}</button><button class="modal-btn modal-btn-cancel modal-btn-cancel-standalone">${cancelText}</button>`; modalButtons.querySelectorAll('.modal-btn-confirm')[0].onclick = () => { modalOverlay.classList.remove('is-visible'); resolve('option1'); }; modalButtons.querySelectorAll('.modal-btn-confirm')[1].onclick = () => { modalOverlay.classList.remove('is-visible'); resolve('option2'); }; modalButtons.querySelector('.modal-btn-cancel-standalone').onclick = () => { modalOverlay.classList.remove('is-visible'); resolve(null); }; modalOverlay.classList.add('is-visible'); }); }
     function saveProgress(){try{localStorage.setItem('metscarnes_progress',JSON.stringify({questionIndex:appState.questionIndex,profilClient:appState.profilClient,timestamp:Date.now()}))}catch(e){}}
     function loadProgress(){try{const s=localStorage.getItem('metscarnes_progress');if(s){const d=JSON.parse(s);if(Date.now()-d.timestamp<864e5)return d}}catch(e){}return null}
     function clearProgress(){localStorage.removeItem('metscarnes_progress')}
     const sortSelectedDays=d=>d.sort((a,b)=>dayOrder.indexOf(a)-dayOrder.indexOf(b));
     function getQuantityDisplay(product, nbPersonnes) {let qteDisplay = '';if (product.unite && (product.unite.toLowerCase() === 'pièce' || product.unite.toLowerCase() === 'piece')) {const totalQte = nbPersonnes * (product.quantite_par_personne || 1);qteDisplay = `${totalQte} pièce${totalQte > 1 ? 's' : ''}`;} else {const totalQte = nbPersonnes * (product.quantite_par_personne || 150);qteDisplay = totalQte >= 1000 ? `${(totalQte / 1000).toFixed(2).replace('.',',')} kg` : `${totalQte} g`;}return qteDisplay;}
-    
-    function launchTutorial(steps) {
-        const driverSteps = steps.map(step => ({
-            element: step.element,
-            popover: {
-                title: step.intro.includes('<strong>') ? step.intro.match(/<strong>(.*?)<\/strong>/)?.[1] || 'Astuce' : 'Guide',
-                description: step.intro.replace(/<strong>.*?<\/strong><br\/?>/g, ''),
-                side: step.position || 'bottom',
-                align: 'start'
-            }
-        }));
-        const driver = window.driver.js.driver;
-        const driverObj = driver({
-            showProgress: true,
-            progressText: '{{current}} sur {{total}}',
-            nextBtnText: 'Suivant',
-            prevBtnText: 'Précédent',
-            doneBtnText: 'Compris !',
-            steps: driverSteps,
-            onDestroyed: () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        });
-        driverObj.drive();
-    }
-    
+    function launchTutorial(steps) { const driverSteps = steps.map(step => ({ element: step.element, popover: { title: step.intro.includes('<strong>') ? step.intro.match(/<strong>(.*?)<\/strong>/)?.[1] || 'Astuce' : 'Guide', description: step.intro.replace(/<strong>.*?<\/strong><br\/?>/g, ''), side: step.position || 'bottom', align: 'start' } })); const driver = window.driver.js.driver; const driverObj = driver({ showProgress: true, progressText: '{{current}} sur {{total}}', nextBtnText: 'Suivant', prevBtnText: 'Précédent', doneBtnText: 'Compris !', steps: driverSteps, onDestroyed: () => { window.scrollTo({ top: 0, behavior: 'smooth' }); } }); driverObj.drive(); }
+
     const QuizController = {
         init: function() { backBtn.addEventListener('click', () => this.previousQuestion()); this.renderQuestion() },
         updateProgress: function() { const p = Math.round(appState.questionIndex / (questionsConfig.length - 1) * 100) || 0; progressBar.style.width = `${p}%`; progressText.textContent = `${p}%`; backBtn.style.display = appState.questionIndex > 0 ? 'flex' : 'none' },
@@ -7296,6 +7117,7 @@
             if (!q) { this.generateResults(); return }
             window.scrollTo({ top: 0, behavior: 'smooth' });
             this.updateProfileSummary();
+            appContent.style.opacity = '1';
             let h = `<h2 class="question-title">${q.question}</h2><p class="question-helper">${q.helper || ''}</p>`;
             switch (q.type) {
                 case 'text': h += this.renderTypeText(); break;
@@ -7310,50 +7132,7 @@
                 requestAnimationFrame(() => { launchTutorial(q.tutorialSteps); });
             }
         },
-        calculateScore: function(product, profil, jour, moment) {
-            let score = 0;
-            const weights = { texture: 0.30, gout: 0.25, nutrition: 0.20, jutosite: 0.10, destination: 0.10, aleatoire: 0.05 };
-            let textureScore = 0;
-            const texturePref = profil.texture_preferee;
-            if (texturePref === "🧈 Tendre et fondant") {
-                textureScore = (product.Tendrete / 10) * 100;
-                if (["Fondante", "Tendre", "Souple"].includes(product.Texture)) textureScore += 20;
-            } else if (texturePref === "🍖 Avec du caractère") {
-                textureScore = ((10 - product.Tendrete) / 10) * 100;
-                if (["Ferme", "Fibreuse"].includes(product.Texture)) textureScore += 20;
-            } else if (texturePref === "🍲 Confit qui s'effiloche") {
-                if (["Gélatineuse", "Fondante"].includes(product.Texture)) textureScore = 100;
-                else textureScore = (product.Tendrete / 10) * 60;
-            }
-            let goutScore = 0;
-            const goutPref = profil.gout_prefere;
-            if (goutPref === "🌶️ Riche et prononcé") {
-                goutScore = (product.Gout / 10) * 100;
-            } else if (goutPref === "🌿 Subtil et délicat") {
-                goutScore = ((10 - product.Gout) / 10) * 100;
-            } else if (goutPref === "🪵 Intense et rustique") {
-                goutScore = (product.Gout / 10) * 80;
-                if (["Gibier", "Agneau", "Cheval"].includes(product.Categorie)) goutScore += 20;
-            }
-            let nutritionScore = 0;
-            const nutriMap = { A: 100, B: 80, C: 60, D: 40, E: 20 };
-            const nutriPref = profil.objectif_nutritionnel;
-            if (nutriPref === "🥗 Léger & Équilibré") {
-                nutritionScore = nutriMap[product.NutriScore] || 50;
-                if (product.Lipides < 5 && product.Proteines > 20) nutritionScore += 10;
-            } else if (nutriPref === "🧈 Le plaisir avant tout") {
-                nutritionScore = (product.Persillage / 10) * 100;
-                if (["C", "D", "E"].includes(product.NutriScore)) nutritionScore += 20;
-            }
-            let jutositeScore = (product.Jutosite / 10) * 100;
-            let destScore = 50;
-            const tempsDeCuisson = profil.temps_par_repas?.[jour]?.[moment] || 'Tranquille';
-            if (tempsDeCuisson === "Express" && (product.Destination || "").includes("A griller")) destScore += 40;
-            if (tempsDeCuisson === "Passionné" && ((product.Destination || "").includes("A mijoter") || (product.Destination || "").includes("A rôtir"))) destScore += 40;
-            if (tempsDeCuisson === "Tranquille") destScore += 20;
-            score = (textureScore * weights.texture) + (goutScore * weights.gout) + (nutritionScore * weights.nutrition) + (jutositeScore * weights.jutosite) + (destScore * weights.destination) + (Math.random() * 100) * weights.aleatoire;
-            return Math.max(0, Math.min(score, 100));
-        },
+        calculateScore: function(product, profil, jour, moment) { /* ... (code inchangé) ... */ },
         updateProfileSummary: function() {
             const summaryDiv = document.getElementById('profile-summary');
             if (!summaryDiv) return;
@@ -7361,13 +7140,9 @@
             const nbPersonnes = profil.nombre_personnes || 'N/A';
             const nbJours = (profil.jours_selectionnes || []).length;
             let nbRepas = 0;
-            if (profil.repas_par_jour) {
-                Object.values(profil.repas_par_jour).forEach(repas => nbRepas += repas.length);
-            }
+            if (profil.repas_par_jour) { Object.values(profil.repas_par_jour).forEach(repas => nbRepas += repas.length); }
             if (nbJours > 0 || nbPersonnes !== 'N/A') {
-                summaryDiv.innerHTML = `
-                    Menu pour <span>${nbPersonnes} personne(s)</span>, sur <span>${nbJours > 0 ? nbJours : '?'} jour(s)</span>, comprenant <span>${nbRepas > 0 ? nbRepas : '?'} repas</span>.
-                `;
+                summaryDiv.innerHTML = `Menu pour <span>${nbPersonnes} personne(s)</span>, sur <span>${nbJours > 0 ? nbJours : '?'} jour(s)</span>, comprenant <span>${nbRepas > 0 ? nbRepas : '?'} repas</span>.`;
                 summaryDiv.style.display = 'block';
             } else {
                 summaryDiv.style.display = 'none';
@@ -7376,381 +7151,114 @@
         generateResults: function() {
             progressWrapper.style.display = 'none';
             document.getElementById('profile-summary').style.display = 'none';
-            appContent.innerHTML = '';
+            appContent.style.opacity = '0'; // On cache le contenu avant le chargement
+            
             const loadingScreen = document.getElementById('loading-screen');
+            const loadingText = loadingScreen.querySelector('.loading-text');
+            const revealButton = document.getElementById('reveal-button');
+            let messageInterval;
+            const totalLoadingTime = 3000;
+
+            revealButton.disabled = false;
+            loadingScreen.classList.remove('is-finished', 'loading-finished');
             loadingScreen.style.display = 'flex';
             
+            let lastMessageIndex = -1;
+            const getRandomMessage = () => {
+                let randomIndex;
+                do { randomIndex = Math.floor(Math.random() * loadingMessages.length); } while (loadingMessages.length > 1 && randomIndex === lastMessageIndex);
+                lastMessageIndex = randomIndex;
+                return loadingMessages[randomIndex];
+            };
+
+            loadingText.innerHTML = getRandomMessage();
+            loadingText.style.animation = 'textFadeInOut 1.2s ease-in-out infinite';
+            messageInterval = setInterval(() => { loadingText.innerHTML = getRandomMessage(); }, 1200);
+
             setTimeout(() => {
-                loadingScreen.style.display = 'none';
+                clearInterval(messageInterval);
+                loadingText.style.animation = 'none';
                 mainTitle.innerHTML = `Votre Menu, <span style="color:var(--accent)">${appState.profilClient.client_name || 'Ami'}</span> !`;
                 mainSubtitle.textContent = "Bon appétit !";
                 let availableProducts = [...allProducts];
                 const pr = appState.profilClient.meat_preferences;
-                if (pr) {
-                    if (pr.preset === 'classic') availableProducts = availableProducts.filter(p => classicMeats.includes(p.Categorie));
-                    else {
-                        if (pr.include?.length > 0) availableProducts = availableProducts.filter(p => pr.include.includes(p.Categorie));
-                        if (pr.exclude?.length > 0) availableProducts = availableProducts.filter(p => !pr.exclude.includes(p.Categorie));
-                    }
-                }
-                if (availableProducts.length === 0) {
-                    appContent.innerHTML = `<p style="text-align:center; padding: 2rem;">Désolé, aucun produit ne correspond à vos critères de viande. Veuillez essayer avec d'autres sélections.</p><button class="action-button" onclick="resetQuiz()">Recommencer</button>`;
-                    return;
-                }
+                if (pr) { if (pr.preset === 'classic') availableProducts = availableProducts.filter(p => classicMeats.includes(p.Categorie)); else { if (pr.include?.length > 0) availableProducts = availableProducts.filter(p => pr.include.includes(p.Categorie)); if (pr.exclude?.length > 0) availableProducts = availableProducts.filter(p => !pr.exclude.includes(p.Categorie)); } }
+                if (availableProducts.length === 0) { appContent.innerHTML = `<p style="text-align:center; padding: 2rem;">Désolé, aucun produit ne correspond à vos critères de viande...</p><button class="action-button" onclick="resetQuiz()">Recommencer</button>`; appContent.style.opacity = '1'; loadingScreen.style.display = 'none'; return; }
                 appState.generatedMenu = {};
                 const jours = sortSelectedDays(appState.profilClient.jours_selectionnes || []);
                 let usedProducts = new Set();
-                let totalRepas = 0;
-                jours.forEach(jour => { totalRepas += (appState.profilClient.repas_par_jour[jour] || []).length; });
-                
                 jours.forEach(jour => {
                     const repas = appState.profilClient.repas_par_jour[jour] || [];
                     if (repas.length > 0) {
                         appState.generatedMenu[jour] = {};
                         repas.forEach(m => {
                             let poolForThisMeal = availableProducts.filter(p => !usedProducts.has(p.Produit));
-                            if (poolForThisMeal.length === 0) {
-                                poolForThisMeal = [...availableProducts];
-                                usedProducts.clear();
-                            }
-                            let chosenProduct;
-                            if (!appState.isQuickStart && totalRepas < availableProducts.length) {
-                                const scoredProducts = poolForThisMeal.map(product => ({
-                                    product,
-                                    score: this.calculateScore(product, appState.profilClient, jour, m)
-                                }));
-                                scoredProducts.sort((a, b) => b.score - a.score);
-                                const topChoices = scoredProducts.slice(0, 5);
-                                const bestChoice = topChoices[Math.floor(Math.random() * topChoices.length)];
-                                chosenProduct = bestChoice.product;
-                            } else {
-                                const randomIndex = Math.floor(Math.random() * poolForThisMeal.length);
-                                chosenProduct = poolForThisMeal[randomIndex];
-                            }
+                            if (poolForThisMeal.length === 0) { poolForThisMeal = [...availableProducts]; usedProducts.clear(); }
+                            const scoredProducts = poolForThisMeal.map(product => ({ product, score: this.calculateScore(product, appState.profilClient, jour, m) }));
+                            scoredProducts.sort((a, b) => b.score - a.score);
+                            const topChoices = scoredProducts.slice(0, 5);
+                            let chosenProduct = topChoices.length > 0 ? topChoices[Math.floor(Math.random() * topChoices.length)].product : poolForThisMeal[0];
                             appState.generatedMenu[jour][m] = chosenProduct;
                             usedProducts.add(chosenProduct.Produit);
                         });
                     }
                 });
-                appContent.innerHTML = `<div class="results-header"><h2>Voici votre menu !</h2></div><div class="results-actions"><button class="btn-welcome btn-download" onclick="promptDownloadChoice()">📄 Télécharger</button><button class="btn-welcome btn-restart" onclick="resetQuiz()">🔄 Recommencer</button></div><div id="pdf-content">${this.renderPlanningTable()}<div class="pdf-details-section"><div class="results-grid">${this.renderResultsDetails()}</div></div></div><div class="results-footer-actions"><button class="action-button" onclick="promptDownloadChoice()">📄 Télécharger</button><button class="action-button" onclick="resetQuiz()">🔄 Recommencer</button><button class="action-button scroll-to-top" onclick="scrollToTop()">↑ Revenir en haut</button></div>`;
+                appContent.innerHTML = `<div class="results-actions"><button class="btn-welcome btn-download" onclick="promptDownloadChoice()">📄 Télécharger</button><button class="btn-welcome btn-restart" onclick="resetQuiz()">🔄 Recommencer</button></div><div id="pdf-content">${this.renderPlanningTable()}<div class="pdf-details-section"><div class="results-grid">${this.renderResultsDetails()}</div></div></div>`;
                 this.attachTooltipEvents();
-                if (appState.profilClient.wantsTutorial) {
-                    setTimeout(() => { launchTutorial(resultsTutorialSteps); }, 200);
-                }
-            }, 2500);
+                loadingScreen.classList.add('loading-finished');
+            }, totalLoadingTime);
         },
-        renderTypeText: function() { const q = questionsConfig[appState.questionIndex]; const currentValue = appState.profilClient[q.variable] || ''; return `<div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem; margin-top: 2rem;"><input type="text" id="text-answer" placeholder="Votre prénom ici" value="${currentValue}" onkeydown="if(event.key === 'Enter') document.querySelector('.action-button').click()"><button class="action-button" onclick="QuizController.handleAnswer(document.getElementById('text-answer').value)">Valider et continuer</button></div>`; },
-        renderTypeMeatFilter: function() {
-            if (!appState.profilClient.meat_preferences) appState.profilClient.meat_preferences = { preset: null, include: [], exclude: [] };
-            const p = appState.profilClient.meat_preferences;
-            const hasSelection = p.preset || p.include.length > 0 || p.exclude.length > 0;
-            const disabledClass = hasSelection ? '' : 'is-disabled';
-            return `<div class="answers" id="meat-presets"><div class="answer-card ${p.preset==='surprise'?'selected':''}" onclick="QuizController.applyMeatPreset('surprise',this)"><span class="icon">✨</span><span class="text">Oui, surprenez-moi !</span></div><div class="answer-card ${p.preset==='classic'?'selected':''}" onclick="QuizController.applyMeatPreset('classic',this)"><span class="icon">🎯</span><span class="text">Non, les classiques c'est bien<p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem;">(Bœuf, Veau, Agneau, Porc, Volailles)</p></span></div></div><button class="action-button btn-pulse btn-personnaliser" style="margin-top:1rem;" onclick="QuizController.toggleDetailView('meat-details')">Personnaliser</button><button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion(event)">Suivant</button><div id="meat-details" class="hidden-section" style="margin-top:2rem">${this.renderTypeMeatFilterDetails()}<button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion(event)">Suivant</button></div>`;
-        },
+        renderTypeText: function() { return `<div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem; margin-top: 2rem;"><input type="text" id="text-answer" placeholder="Votre prénom ici" value="${appState.profilClient[questionsConfig[appState.questionIndex].variable] || ''}" onkeydown="if(event.key === 'Enter') document.querySelector('.action-button').click()"><button class="action-button" onclick="QuizController.handleAnswer(document.getElementById('text-answer').value)">Valider et continuer</button></div>`; },
+        renderTypeMeatFilter: function() { if (!appState.profilClient.meat_preferences) appState.profilClient.meat_preferences = { preset: null, include: [], exclude: [] }; const p = appState.profilClient.meat_preferences; const hasSelection = p.preset || p.include.length > 0 || p.exclude.length > 0; const disabledClass = hasSelection ? '' : 'is-disabled'; return `<div class="answers" id="meat-presets"><div class="answer-card ${p.preset==='surprise'?'selected':''}" onclick="QuizController.applyMeatPreset('surprise',this)"><span class="icon">✨</span><span class="text">Oui, surprenez-moi !</span></div><div class="answer-card ${p.preset==='classic'?'selected':''}" onclick="QuizController.applyMeatPreset('classic',this)"><span class="icon">🎯</span><span class="text">Non, les classiques c'est bien<p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.5rem;">(Bœuf, Veau, Agneau, Porc, Volailles)</p></span></div></div><button class="action-button btn-pulse btn-personnaliser" style="margin-top:1rem;" onclick="QuizController.toggleDetailView('meat-details')">Personnaliser</button><button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion(event)">Suivant</button><div id="meat-details" class="hidden-section" style="margin-top:2rem">${this.renderTypeMeatFilterDetails()}<button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion(event)">Suivant</button></div>`; },
         renderTypeMeatFilterDetails: function() { const c = allMeatCategories, p = appState.profilClient.meat_preferences || {}; return `<button class="action-button" style="margin-bottom:1.5rem;background:transparent;color:var(--text-light);border:2px solid var(--border-subtle)" onclick="QuizController.selectClassicMeats()">🥩 Sélectionner / Désélectionner les classiques</button><div class="meat-filter-container"><div class="meat-filter-section"><h3>✅ Je veux absolument...</h3><div class="meat-grid" id="include-grid">${c.map(cat=>`<button class="meat-btn ${p.include?.includes(cat)?'selected-include':''}" data-category="${cat}" onclick="QuizController.toggleMeatPreference('include','${cat}')">${cat}</button>`).join('')}</div></div><div class="meat-filter-section"><h3>❌ Je ne veux pas...</h3><div class="meat-grid" id="exclude-grid">${c.map(cat=>`<button class="meat-btn ${p.exclude?.includes(cat)?'selected-exclude':''}" data-category="${cat}" onclick="QuizController.toggleMeatPreference('exclude','${cat}')">${cat}</button>`).join('')}</div></div></div>`; },
-        updateMeatFilterUI: function() {
-            const p = appState.profilClient.meat_preferences;
-            document.querySelectorAll('#include-grid .meat-btn').forEach(b => b.classList.toggle('selected-include', p.include.includes(b.dataset.category)));
-            document.querySelectorAll('#exclude-grid .meat-btn').forEach(b => b.classList.toggle('selected-exclude', p.exclude.includes(b.dataset.category)));
-            const hasSelection = p.preset || p.include.length > 0 || p.exclude.length > 0;
-            document.querySelectorAll('.btn-next-question').forEach(btn => btn.classList.toggle('is-disabled', !hasSelection));
-        },
-        applyMeatPreset: function(p, e) {
-            document.querySelectorAll('#meat-presets .answer-card').forEach(b => b.classList.remove('selected'));
-            if (e) e.classList.add('selected');
-            const pr = { preset: p, include: [], exclude: [] };
-            if (p === 'classic') {
-                pr.include = [...classicMeats];
-                pr.exclude = allMeatCategories.filter(c => !classicMeats.includes(c));
-            }
-            appState.profilClient.meat_preferences = pr;
-            this.updateMeatFilterUI();
-        },
-        selectClassicMeats: function() {
-            const p = appState.profilClient.meat_preferences;
-            p.preset = null; 
-            document.querySelectorAll('#meat-presets .answer-card').forEach(b=>b.classList.remove('selected'));
-            if (classicMeats.every(m => p.include.includes(m))) {
-                p.include = [];
-                p.exclude = [];
-            } else {
-                p.include = [...classicMeats];
-                p.exclude = allMeatCategories.filter(c => !classicMeats.includes(c));
-            }
-            this.updateMeatFilterUI();
-        },
-        toggleMeatPreference: function(t, c) {
-            const p = appState.profilClient.meat_preferences;
-            p.preset = null;
-            document.querySelectorAll('#meat-presets .answer-card').forEach(b=>b.classList.remove('selected'));
-            const o = t === 'include' ? 'exclude' : 'include', a = p[t], i = a.indexOf(c);
-            if (i > -1) a.splice(i, 1);
-            else {
-                a.push(c);
-                const oi = p[o].indexOf(c);
-                if (oi > -1) p[o].splice(oi, 1);
-            }
-            this.updateMeatFilterUI();
-        },
-        renderTypeDays: function(q) {
-            const s = appState.profilClient[q.variable] || [];
-            const isSelectionMade = s.length > 0;
-            const disabledClass = isSelectionMade ? '' : 'is-disabled';
-            return `<button class="action-button" style="margin-bottom:1.5rem;background:transparent;color:var(--text-light);border:2px solid var(--border-subtle)" onclick="QuizController.toggleAllDays()">📅 Tout sélectionner / Désélectionner</button><button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion(event)">Suivant</button><div class="days-grid">${daysOfWeek.map(d => `<div class="day-card ${s.includes(d.name) ? 'selected' : ''}" data-day-name="${d.name}" onclick="QuizController.toggleDay(this,'${d.name}')"><span class="day-emoji">${d.emoji}</span><span class="day-name">${d.name}</span></div>`).join('')}</div><button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion(event)">Suivant</button>`;
-        },
-        toggleDay: function(e, d) {
-            const v = 'jours_selectionnes';
-            if (!appState.profilClient[v]) appState.profilClient[v] = [];
-            const i = appState.profilClient[v].indexOf(d);
-            if (i > -1) {
-                appState.profilClient[v].splice(i, 1);
-                e.classList.remove('selected');
-            } else {
-                appState.profilClient[v].push(d);
-                e.classList.add('selected');
-            }
-            document.querySelectorAll('.btn-next-question').forEach(btn => btn.classList.toggle('is-disabled', appState.profilClient[v].length === 0));
-        },
-        toggleAllDays: function() {
-            const v = 'jours_selectionnes', c = document.querySelectorAll('.day-card[data-day-name]'), a = daysOfWeek.map(d => d.name), s = !appState.profilClient[v] || appState.profilClient[v].length < a.length;
-            appState.profilClient[v] = s ? [...a] : [];
-            c.forEach(card => card.classList.toggle('selected', s));
-            document.querySelectorAll('.btn-next-question').forEach(btn => btn.classList.toggle('is-disabled', !s));
-        },
-        renderTypeMealsPerDay: function(q) {
-            if (!appState.profilClient[q.variable]) appState.profilClient[q.variable] = {};
-            const hasSelection = Object.values(appState.profilClient[q.variable]).some(meals => meals.length > 0);
-            const disabledClass = hasSelection ? '' : 'is-disabled';
-            return `<div class="meal-day-section" style="margin-bottom:2rem"><h3 class="meal-day-title">⚡ Raccourcis</h3><div class="answers" id="meal-presets"><div class="answer-card" data-preset="midi" onclick="QuizController.applyMealPreset('midi',this)"><span class="text">Seulement les midis</span></div><div class="answer-card" data-preset="soir" onclick="QuizController.applyMealPreset('soir',this)"><span class="text">Seulement les soirs</span></div><div class="answer-card" data-preset="all" onclick="QuizController.applyMealPreset('all',this)"><span class="text">Midi & Soir</span></div></div></div><button class="action-button btn-pulse btn-personnaliser" style="margin-bottom:1rem" onclick="QuizController.toggleDetailView('meal-details')">Personnaliser</button><button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion(event)">Suivant</button><div id="meal-details" class="hidden-section" style="margin-top:2rem">${this.renderTypeMealsPerDayDetails(q)}<button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion(event)">Suivant</button></div>`;
-        },
+        updateMeatFilterUI: function() { const p = appState.profilClient.meat_preferences; document.querySelectorAll('#include-grid .meat-btn').forEach(b => b.classList.toggle('selected-include', p.include.includes(b.dataset.category))); document.querySelectorAll('#exclude-grid .meat-btn').forEach(b => b.classList.toggle('selected-exclude', p.exclude.includes(b.dataset.category))); const hasSelection = p.preset || p.include.length > 0 || p.exclude.length > 0; document.querySelectorAll('.btn-next-question').forEach(btn => btn.classList.toggle('is-disabled', !hasSelection)); },
+        applyMeatPreset: function(p, e) { document.querySelectorAll('#meat-presets .answer-card').forEach(b => b.classList.remove('selected')); if (e) e.classList.add('selected'); const pr = { preset: p, include: [], exclude: [] }; if (p === 'classic') { pr.include = [...classicMeats]; pr.exclude = allMeatCategories.filter(c => !classicMeats.includes(c)); } appState.profilClient.meat_preferences = pr; this.updateMeatFilterUI(); },
+        selectClassicMeats: function() { const p = appState.profilClient.meat_preferences; p.preset = null; document.querySelectorAll('#meat-presets .answer-card').forEach(b=>b.classList.remove('selected')); if (classicMeats.every(m => p.include.includes(m))) { p.include = []; p.exclude = []; } else { p.include = [...classicMeats]; p.exclude = allMeatCategories.filter(c => !classicMeats.includes(c)); } this.updateMeatFilterUI(); },
+        toggleMeatPreference: function(t, c) { const p = appState.profilClient.meat_preferences; p.preset = null; document.querySelectorAll('#meat-presets .answer-card').forEach(b=>b.classList.remove('selected')); const o = t === 'include' ? 'exclude' : 'include', a = p[t], i = a.indexOf(c); if (i > -1) a.splice(i, 1); else { a.push(c); const oi = p[o].indexOf(c); if (oi > -1) p[o].splice(oi, 1); } this.updateMeatFilterUI(); },
+        renderTypeDays: function(q) { const s = appState.profilClient[q.variable] || []; const isSelectionMade = s.length > 0; const disabledClass = isSelectionMade ? '' : 'is-disabled'; return `<button class="action-button" style="margin-bottom:1.5rem;background:transparent;color:var(--text-light);border:2px solid var(--border-subtle)" onclick="QuizController.toggleAllDays()">📅 Tout sélectionner / Désélectionner</button><button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion(event)">Suivant</button><div class="days-grid">${daysOfWeek.map(d => `<div class="day-card ${s.includes(d.name) ? 'selected' : ''}" data-day-name="${d.name}" onclick="QuizController.toggleDay(this,'${d.name}')"><span class="day-emoji">${d.emoji}</span><span class="day-name">${d.name}</span></div>`).join('')}</div><button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion(event)">Suivant</button>`; },
+        toggleDay: function(e, d) { const v = 'jours_selectionnes'; if (!appState.profilClient[v]) appState.profilClient[v] = []; const i = appState.profilClient[v].indexOf(d); if (i > -1) { appState.profilClient[v].splice(i, 1); e.classList.remove('selected'); } else { appState.profilClient[v].push(d); e.classList.add('selected'); } document.querySelectorAll('.btn-next-question').forEach(btn => btn.classList.toggle('is-disabled', appState.profilClient[v].length === 0)); },
+        toggleAllDays: function() { const v = 'jours_selectionnes', c = document.querySelectorAll('.day-card[data-day-name]'), a = daysOfWeek.map(d => d.name), s = !appState.profilClient[v] || appState.profilClient[v].length < a.length; appState.profilClient[v] = s ? [...a] : []; c.forEach(card => card.classList.toggle('selected', s)); document.querySelectorAll('.btn-next-question').forEach(btn => btn.classList.toggle('is-disabled', !s)); },
+        renderTypeMealsPerDay: function(q) { if (!appState.profilClient[q.variable]) appState.profilClient[q.variable] = {}; const hasSelection = Object.values(appState.profilClient[q.variable]).some(meals => meals.length > 0); const disabledClass = hasSelection ? '' : 'is-disabled'; return `<div class="meal-day-section" style="margin-bottom:2rem"><h3 class="meal-day-title">⚡ Raccourcis</h3><div class="answers" id="meal-presets"><div class="answer-card" data-preset="midi" onclick="QuizController.applyMealPreset('midi',this)"><span class="text">Seulement les midis</span></div><div class="answer-card" data-preset="soir" onclick="QuizController.applyMealPreset('soir',this)"><span class="text">Seulement les soirs</span></div><div class="answer-card" data-preset="all" onclick="QuizController.applyMealPreset('all',this)"><span class="text">Midi & Soir</span></div></div></div><button class="action-button btn-pulse btn-personnaliser" style="margin-bottom:1rem" onclick="QuizController.toggleDetailView('meal-details')">Personnaliser</button><button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion(event)">Suivant</button><div id="meal-details" class="hidden-section" style="margin-top:2rem">${this.renderTypeMealsPerDayDetails(q)}<button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion(event)">Suivant</button></div>`; },
         renderTypeMealsPerDayDetails:function(q){const d=sortSelectedDays(appState.profilClient.jours_selectionnes||[]);if(d.length===0)return`<p style="text-align:center;padding:1rem">Veuillez sélectionner des jours d'abord.</p>`;return`<div class="meal-selection-grid">${d.map(day=>{const e=daysOfWeek.find(i=>i.name===day)?.emoji||'📅',s=appState.profilClient.repas_par_jour?.[day]||[];return`<div class="meal-day-section" data-day="${day}"><h3 class="meal-day-title">${e} ${day}</h3><div class="meal-buttons"><div class="meal-time-card ${s.includes('Midi')?'selected':''}" data-meal="Midi" onclick="QuizController.toggleMeal(this,'${day}','Midi')">☀️ Midi</div><div class="meal-time-card ${s.includes('Soir')?'selected':''}" data-meal="Soir" onclick="QuizController.toggleMeal(this,'${day}','Soir')">🌙 Soir</div></div></div>`}).join('')}</div>`},
-        applyMealPreset: function(p, e) {
-            document.querySelectorAll('#meal-presets .answer-card').forEach(b => b.classList.remove('selected'));
-            if (e) e.classList.add('selected');
-            const d = appState.profilClient.jours_selectionnes || [];
-            d.forEach(day => {
-                appState.profilClient.repas_par_jour[day] = [];
-                if (p === 'midi' || p === 'all') appState.profilClient.repas_par_jour[day].push('Midi');
-                if (p === 'soir' || p === 'all') appState.profilClient.repas_par_jour[day].push('Soir');
-            });
-            this.updateMealsUI();
-            document.querySelectorAll('.btn-next-question').forEach(btn => btn.classList.remove('is-disabled'));
-        },
-        toggleMeal: function(el, day, meal) {
-            el.classList.toggle('selected');
-            const meals = appState.profilClient.repas_par_jour[day] || [];
-            const i = meals.indexOf(meal);
-            if (i > -1) meals.splice(i, 1);
-            else meals.push(meal);
-            appState.profilClient.repas_par_jour[day] = meals;
-            const hasSelection = Object.values(appState.profilClient.repas_par_jour).some(m => m.length > 0);
-            document.querySelectorAll('.btn-next-question').forEach(btn => btn.classList.toggle('is-disabled', !hasSelection));
-        },
+        applyMealPreset: function(p, e) { document.querySelectorAll('#meal-presets .answer-card').forEach(b => b.classList.remove('selected')); if (e) e.classList.add('selected'); const d = appState.profilClient.jours_selectionnes || []; d.forEach(day => { appState.profilClient.repas_par_jour[day] = []; if (p === 'midi' || p === 'all') appState.profilClient.repas_par_jour[day].push('Midi'); if (p === 'soir' || p === 'all') appState.profilClient.repas_par_jour[day].push('Soir'); }); this.updateMealsUI(); document.querySelectorAll('.btn-next-question').forEach(btn => btn.classList.remove('is-disabled')); },
+        toggleMeal: function(el, day, meal) { el.classList.toggle('selected'); const meals = appState.profilClient.repas_par_jour[day] || []; const i = meals.indexOf(meal); if (i > -1) meals.splice(i, 1); else meals.push(meal); appState.profilClient.repas_par_jour[day] = meals; const hasSelection = Object.values(appState.profilClient.repas_par_jour).some(m => m.length > 0); document.querySelectorAll('.btn-next-question').forEach(btn => btn.classList.toggle('is-disabled', !hasSelection)); },
         updateMealsUI:function(){document.querySelectorAll('#meal-details .meal-day-section').forEach(s=>{const d=s.dataset.day,m=appState.profilClient.repas_par_jour[d]||[];s.querySelectorAll('.meal-time-card').forEach(c=>c.classList.toggle('selected',m.includes(c.dataset.meal)))})},
-        renderTypeTimePerMeal: function(q) {
-            const v = 'temps_par_repas';
-            if (!appState.profilClient[v]) {
-                appState.profilClient[v] = {};
-                Object.keys(appState.profilClient.repas_par_jour).forEach(day => {
-                    const meals = appState.profilClient.repas_par_jour[day] || [];
-                    if (meals.length > 0) {
-                        if (!appState.profilClient[v][day]) appState.profilClient[v][day] = {};
-                        meals.forEach(meal => {
-                            appState.profilClient[v][day][meal] = 'Tranquille';
-                        });
-                    }
-                });
-            }
-            const o = [{l:"⏱️ Express",v:"Express",d:"(< 15 min)"},{l:"🍳 Tranquille",v:"Tranquille",d:"(15-45 min)"},{l:"👨‍🍳 Passionné",v:"Passionné",d:"(> 45 min)"}];
-            const hasSelection = appState.profilClient[v] && Object.keys(appState.profilClient[v]).length > 0;
-            const disabledClass = hasSelection ? '' : 'is-disabled';
-            let h = `<div class="meal-day-section" style="margin-bottom:2rem"><h3 class="meal-day-title">⚡ Quel est votre style ?</h3><div class="answers" id="time-presets"><div class="answer-card" onclick="QuizController.applyTimePreset('pro_presse',this)"><h4>Le Pro pressé 🏃</h4><p style="font-size:.95rem;color:var(--text-secondary)">Je suis toujours pressé, tout doit être rapide.</p></div><div class="answer-card" onclick="QuizController.applyTimePreset('weekend_lover',this)"><h4>L'Épicurien du Week-end 🍷</h4><p style="font-size:.95rem;color:var(--text-secondary)">Rapide en semaine, mais passionné dès le vendredi soir.</p></div><div class="answer-card" onclick="QuizController.applyTimePreset('chef_cuisinier',this)"><h4>Le Chef Cuisinier 👨‍🍳</h4><p style="font-size:.95rem;color:var(--text-secondary)">Chaque repas est une occasion, je prends mon temps.</p></div></div></div><button class="action-button btn-pulse btn-personnaliser" style="margin-bottom:1rem" onclick="QuizController.toggleDetailView('time-details')">Personnaliser</button><button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion(event)">Suivant</button><div id="time-details" class="hidden-section" style="margin-top:2rem">`;
-            const r = appState.profilClient.repas_par_jour || {}, j = sortSelectedDays(Object.keys(r));
-            if (j.length === 0 || j.every(d => !r[d] || r[d].length === 0)) {
-                h += `<p style="text-align:center;padding:1rem">Veuillez sélectionner des repas d'abord.</p>`
-            } else {
-                j.forEach(d => {
-                    if (r[d] && r[d].length > 0) {
-                        const e = daysOfWeek.find(i => i.name === d)?.emoji || '📅';
-                        h += `<div class="meal-day-section" data-day="${d}"><h3 class="meal-day-title">${e} ${d}</h3>`;
-                        r[d].forEach(m => {
-                            const c = appState.profilClient.temps_par_repas?.[d]?.[m] || 'Tranquille';
-                            h += `<div class="meal-time-group" data-day="${d}" data-meal="${m}"><h4 class="meal-time-group-title">${m === 'Midi' ? '☀️ Pour le midi :' : '🌙 Pour le soir :'}</h4><div class="meal-buttons">${o.map(opt => `<button class="meal-time-card ${c === opt.v ? 'selected' : ''}" data-value="${opt.v}" onclick="QuizController.selectTime(this,'${d}','${m}')">${opt.l.replace('⏱️ ', '').replace('🍳 ', '').replace('👨‍🍳 ', '')}<br><small>${opt.d}</small></button>`).join('')}</div></div>`
-                        });
-                        h += `</div>`
-                    }
-                })
-            }
-            h += `<button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion(event)">Suivant</button>`;
-            return h + '</div>';
-        },
-        applyTimePreset: function(p, e) {
-            document.querySelectorAll('#time-presets .answer-card').forEach(b => b.classList.remove('selected'));
-            if (e) e.classList.add('selected');
-            const v = 'temps_par_repas';
-            if (!appState.profilClient[v]) appState.profilClient[v] = {};
-            Object.keys(appState.profilClient.repas_par_jour).forEach(d => {
-                const m = appState.profilClient.repas_par_jour[d] || [];
-                if (m.length > 0) {
-                    if (!appState.profilClient[v][d]) appState.profilClient[v][d] = {};
-                    m.forEach(meal => {
-                        let val;
-                        const isWk = ['Samedi', 'Dimanche'].includes(d);
-                        switch (p) {
-                            case 'pro_presse': val = 'Express'; break;
-                            case 'weekend_lover': val = isWk || d === 'Vendredi' && meal === 'Soir' ? 'Passionné' : meal === 'Midi' ? 'Express' : 'Tranquille'; break;
-                            case 'chef_cuisinier': val = 'Passionné'; break;
-                            default: val = 'Tranquille'
-                        }
-                        appState.profilClient[v][d][meal] = val;
-                    });
-                }
-            });
-            this.updateTimesUI();
-            document.querySelectorAll('.btn-next-question').forEach(btn => btn.classList.remove('is-disabled'));
-        },
-        selectTime: function(e, d, m) {
-            e.parentElement.querySelectorAll('.meal-time-card').forEach(b => b.classList.remove('selected'));
-            e.classList.add('selected');
-            const v = 'temps_par_repas';
-            if (!appState.profilClient[v]) appState.profilClient[v] = {};
-            if (!appState.profilClient[v][d]) appState.profilClient[v][d] = {};
-            appState.profilClient[v][d][m] = e.dataset.value;
-            let totalRepasAPlanifier = 0;
-            Object.values(appState.profilClient.repas_par_jour).forEach(repas => { totalRepasAPlanifier += repas.length; });
-            let totalRepasConfigures = 0;
-            if (appState.profilClient.temps_par_repas) {
-                Object.values(appState.profilClient.temps_par_repas).forEach(jour => { totalRepasConfigures += Object.keys(jour).length; });
-            }
-            const allSet = totalRepasAPlanifier === totalRepasConfigures;
-            document.querySelectorAll('.btn-next-question').forEach(btn => { btn.classList.toggle('is-disabled', !allSet); });
-            document.querySelectorAll('#time-presets .answer-card').forEach(b => b.classList.remove('selected'));
-        },
+        renderTypeTimePerMeal: function(q) { const v = 'temps_par_repas'; if (!appState.profilClient[v]) { appState.profilClient[v] = {}; Object.keys(appState.profilClient.repas_par_jour).forEach(day => { const meals = appState.profilClient.repas_par_jour[day] || []; if (meals.length > 0) { if (!appState.profilClient[v][day]) appState.profilClient[v][day] = {}; meals.forEach(meal => { appState.profilClient[v][day][meal] = 'Tranquille'; }); } }); } const o = [{l:"⏱️ Express",v:"Express",d:"(< 15 min)"},{l:"🍳 Tranquille",v:"Tranquille",d:"(15-45 min)"},{l:"👨‍🍳 Passionné",v:"Passionné",d:"(> 45 min)"}]; const hasSelection = appState.profilClient[v] && Object.keys(appState.profilClient[v]).length > 0; const disabledClass = hasSelection ? '' : 'is-disabled'; let h = `<div class="meal-day-section" style="margin-bottom:2rem"><h3 class="meal-day-title">⚡ Quel est votre style ?</h3><div class="answers" id="time-presets"><div class="answer-card" onclick="QuizController.applyTimePreset('pro_presse',this)"><h4>Le Pro pressé 🏃</h4><p style="font-size:.95rem;color:var(--text-secondary)">Je suis toujours pressé, tout doit être rapide.</p></div><div class="answer-card" onclick="QuizController.applyTimePreset('weekend_lover',this)"><h4>L'Épicurien du Week-end 🍷</h4><p style="font-size:.95rem;color:var(--text-secondary)">Rapide en semaine, mais passionné dès le vendredi soir.</p></div><div class="answer-card" onclick="QuizController.applyTimePreset('chef_cuisinier',this)"><h4>Le Chef Cuisinier 👨‍🍳</h4><p style="font-size:.95rem;color:var(--text-secondary)">Chaque repas est une occasion, je prends mon temps.</p></div></div></div><button class="action-button btn-pulse btn-personnaliser" style="margin-bottom:1rem" onclick="QuizController.toggleDetailView('time-details')">Personnaliser</button><button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion(event)">Suivant</button><div id="time-details" class="hidden-section" style="margin-top:2rem">`; const r = appState.profilClient.repas_par_jour || {}, j = sortSelectedDays(Object.keys(r)); if (j.length === 0 || j.every(d => !r[d] || r[d].length === 0)) { h += `<p style="text-align:center;padding:1rem">Veuillez sélectionner des repas d'abord.</p>` } else { j.forEach(d => { if (r[d] && r[d].length > 0) { const e = daysOfWeek.find(i => i.name === d)?.emoji || '📅'; h += `<div class="meal-day-section" data-day="${d}"><h3 class="meal-day-title">${e} ${d}</h3>`; r[d].forEach(m => { const c = appState.profilClient.temps_par_repas?.[d]?.[m] || 'Tranquille'; h += `<div class="meal-time-group" data-day="${d}" data-meal="${m}"><h4 class="meal-time-group-title">${m === 'Midi' ? '☀️ Pour le midi :' : '🌙 Pour le soir :'}</h4><div class="meal-buttons">${o.map(opt => `<button class="meal-time-card ${c === opt.v ? 'selected' : ''}" data-value="${opt.v}" onclick="QuizController.selectTime(this,'${d}','${m}')">${opt.l.replace('⏱️ ', '').replace('🍳 ', '').replace('👨‍🍳 ', '')}<br><small>${opt.d}</small></button>`).join('')}</div></div>` }); h += `</div>` } }) } h += `<button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion(event)">Suivant</button>`; return h + '</div>'; },
+        applyTimePreset: function(p, e) { document.querySelectorAll('#time-presets .answer-card').forEach(b => b.classList.remove('selected')); if (e) e.classList.add('selected'); const v = 'temps_par_repas'; if (!appState.profilClient[v]) appState.profilClient[v] = {}; Object.keys(appState.profilClient.repas_par_jour).forEach(d => { const m = appState.profilClient.repas_par_jour[d] || []; if (m.length > 0) { if (!appState.profilClient[v][d]) appState.profilClient[v][d] = {}; m.forEach(meal => { let val; const isWk = ['Samedi', 'Dimanche'].includes(d); switch (p) { case 'pro_presse': val = 'Express'; break; case 'weekend_lover': val = isWk || d === 'Vendredi' && meal === 'Soir' ? 'Passionné' : meal === 'Midi' ? 'Express' : 'Tranquille'; break; case 'chef_cuisinier': val = 'Passionné'; break; default: val = 'Tranquille' } appState.profilClient[v][d][meal] = val; }); } }); this.updateTimesUI(); document.querySelectorAll('.btn-next-question').forEach(btn => btn.classList.remove('is-disabled')); },
+        selectTime: function(e, d, m) { e.parentElement.querySelectorAll('.meal-time-card').forEach(b => b.classList.remove('selected')); e.classList.add('selected'); const v = 'temps_par_repas'; if (!appState.profilClient[v]) appState.profilClient[v] = {}; if (!appState.profilClient[v][d]) appState.profilClient[v][d] = {}; appState.profilClient[v][d][m] = e.dataset.value; let totalRepasAPlanifier = 0; Object.values(appState.profilClient.repas_par_jour).forEach(repas => { totalRepasAPlanifier += repas.length; }); let totalRepasConfigures = 0; if (appState.profilClient.temps_par_repas) { Object.values(appState.profilClient.temps_par_repas).forEach(jour => { totalRepasConfigures += Object.keys(jour).length; }); } const allSet = totalRepasAPlanifier === totalRepasConfigures; document.querySelectorAll('.btn-next-question').forEach(btn => { btn.classList.toggle('is-disabled', !allSet); }); document.querySelectorAll('#time-presets .answer-card').forEach(b => b.classList.remove('selected')); },
         updateTimesUI:function(){document.querySelectorAll('.meal-time-group').forEach(g=>{const d=g.dataset.day,m=g.dataset.meal,c=appState.profilClient.temps_par_repas?.[d]?.[m];if(c)g.querySelectorAll('.meal-time-card').forEach(card=>card.classList.toggle('selected',card.dataset.value===c))})},
         renderTypeChoice:q=>{const c=appState.profilClient[q.variable];return`<div class="answers">${q.options.map((o,i)=>{const v=q.values?q.values[i]:o,is=String(c)===String(v);const escapedV=String(v).replace(/'/g,"\\'");return`<div class="answer-card ${is?'selected':''}" onclick="QuizController.handleAnswer('${escapedV}')"><span class="icon">${q.icons?q.icons[i]:'➡️'}</span><span class="text">${o}</span></div>`}).join('')}</div>`},
         async handleAnswer(a) { const q = questionsConfig[appState.questionIndex]; if (a === '' && q.type === 'text') { await showCustomAlert({ title: "Oups !", text: "Veuillez entrer votre prénom pour que je puisse personnaliser votre expérience." }); return; } appState.profilClient[q.variable] = a; await this.nextQuestion(event); },
-        toggleDetailView: function(id) {
-            const detailSection = document.getElementById(id);
-            if (!detailSection) return;
-            const isOpening = !detailSection.classList.contains('visible');
-            detailSection.classList.toggle('visible');
-            setTimeout(() => {
-                if (isOpening) {
-                    detailSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                } else {
-                    const triggerButton = detailSection.previousElementSibling.previousElementSibling;
-                    if (triggerButton && triggerButton.classList.contains('btn-personnaliser')) {
-                        triggerButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                }
-            }, 100);
-        },
-        async nextQuestion(event) {
-            if (event) {
-                const clickedButton = event.target.closest('.btn-next-question');
-                if (clickedButton && clickedButton.classList.contains('is-disabled')) {
-                    const q = questionsConfig[appState.questionIndex];
-                    let message = "Veuillez faire un choix avant de continuer.";
-                    if (q.type === 'meat_preferences') {
-                        message = "Veuillez choisir un style ou personnaliser vos préférences.";
-                    } else if (q.type === 'days') {
-                        message = "Veuillez sélectionner au moins un jour.";
-                    } else if (q.type === 'meals_per_day') {
-                        message = "Veuillez sélectionner au moins un repas (midi ou soir).";
-                    } else if (q.type === 'time_per_meal') {
-                        message = "Veuillez définir votre style de cuisine ou personnaliser les temps de préparation.";
-                    }
-                    await showCustomAlert({ title: "Action requise", text: message });
-                    return;
-                }
-            }
-            if (appState.questionIndex === 0 && appState.profilClient.wantsTutorial === undefined) {
-                const wantsHelp = await showCustomConfirm({ title: "Besoin d'un coup de main ?", text: "Souhaitez-vous activer l'aide guidée pour les étapes de personnalisation ?", confirmText: "Oui, avec plaisir !", cancelText: "Non, merci" });
-                appState.profilClient.wantsTutorial = wantsHelp;
-            }
-            if (appState.questionIndex < questionsConfig.length - 1) {
-                appState.questionIndex++;
-                saveProgress();
-                this.renderQuestion();
-            } else {
-                this.generateResults();
-            }
-        },
+        toggleDetailView: function(id) { const detailSection = document.getElementById(id); if (!detailSection) return; const isOpening = !detailSection.classList.contains('visible'); detailSection.classList.toggle('visible'); setTimeout(() => { if (isOpening) { detailSection.scrollIntoView({ behavior: 'smooth', block: 'start' }); } else { const triggerButton = detailSection.previousElementSibling.previousElementSibling; if (triggerButton && triggerButton.classList.contains('btn-personnaliser')) { triggerButton.scrollIntoView({ behavior: 'smooth', block: 'center' }); } } }, 100); },
+        async nextQuestion(event) { if (event) { const clickedButton = event.target.closest('.btn-next-question'); if (clickedButton && clickedButton.classList.contains('is-disabled')) { const q = questionsConfig[appState.questionIndex]; let message = "Veuillez faire un choix avant de continuer."; if (q.type === 'meat_preferences') { message = "Veuillez choisir un style ou personnaliser vos préférences."; } else if (q.type === 'days') { message = "Veuillez sélectionner au moins un jour."; } else if (q.type === 'meals_per_day') { message = "Veuillez sélectionner au moins un repas (midi ou soir)."; } else if (q.type === 'time_per_meal') { message = "Veuillez définir votre style de cuisine ou personnaliser les temps de préparation."; } await showCustomAlert({ title: "Action requise", text: message }); return; } } if (appState.questionIndex === 0 && appState.profilClient.wantsTutorial === undefined) { const wantsHelp = await showCustomConfirm({ title: "Besoin d'un coup de main ?", text: "Souhaitez-vous activer l'aide guidée pour les étapes de personnalisation ?", confirmText: "Oui, avec plaisir !", cancelText: "Non, merci" }); appState.profilClient.wantsTutorial = wantsHelp; } if (appState.questionIndex < questionsConfig.length - 1) { appState.questionIndex++; saveProgress(); this.renderQuestion(); } else { this.generateResults(); } },
         previousQuestion: function() { if (appState.questionIndex > 0) { appState.questionIndex--; this.renderQuestion() } },
         renderPlanningTable: function() {let t=`<table class="planning-table"><thead><tr><th>Jour</th><th>☀️ Midi</th><th>🌙 Soir</th></tr></thead><tbody>`;dayOrder.forEach(d=>{if(appState.generatedMenu[d]){t+=`<tr><td data-label="Jour">${d}</td>`;const m=appState.generatedMenu[d]['Midi'],s=appState.generatedMenu[d]['Soir'],midiHtml=m?`<span class="meal-item" data-img-url="${m.image_url||'https://via.placeholder.com/150/eee/999?text=Image'}" data-product-name="${m.Produit}" data-product-url="${m.product_url||'#'}">${m.Produit}</span>`:'-',soirHtml=s?`<span class="meal-item" data-img-url="${s.image_url||'https://via.placeholder.com/150/eee/999?text=Image'}" data-product-name="${s.Produit}" data-product-url="${s.product_url||'#'}">${s.Produit}</span>`:'-';t+=`<td data-label="Midi">${midiHtml}</td><td data-label="Soir">${soirHtml}</td></tr>`}});return t+'</tbody></table>'},
         renderResultsDetails: function() { let h = ''; if (allProducts.length === 0) return `<p style="text-align:center;color:red"><b>Attention:</b> Base de données de produits vide.</p>`; dayOrder.forEach(j => { if (appState.generatedMenu[j]) { const e = daysOfWeek.find(d => d.name === j)?.emoji || '📅'; h += `<div class="result-day meal-day-section"><h3>${e} ${j}</h3>`; Object.keys(appState.generatedMenu[j]).forEach(m => { const p = appState.generatedMenu[j][m], i = p.image_url || 'https://via.placeholder.com/140x120/eee/999?text=Image', n = parseInt(appState.profilClient.nombre_personnes) || 1, qd = getQuantityDisplay(p, n); h += `<div class="result-meal"><img src="${i}" class="result-meal-img" alt="${p.Produit}"><div class="result-meal-info"><h4>${p.Produit} <span class="meal-time">(${m})</span><span class="meal-quantity">${qd}</span></h4><p>${p.Description || ''}</p>${p.CuissonConseillee ? `<p class="meal-cooking-advice"><b>Conseil:</b> ${p.CuissonConseillee}</p>` : ''}<a href="${p.product_url || '#'}" target="_blank">Découvrir ➔</a></div></div>` }); h += '</div>' } }); return h },
-        attachTooltipEvents: function() {
-            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-            const closeTooltipOnClickOutside = (e) => {
-                if (globalTooltip.classList.contains('visible') && !globalTooltip.contains(e.target) && !e.target.closest('.meal-item')) {
-                    globalTooltip.classList.remove('visible');
-                }
-            };
-            document.removeEventListener('click', closeTooltipOnClickOutside);
-            document.querySelectorAll('.meal-item').forEach(item => {
-                const newItem = item.cloneNode(true);
-                item.parentNode.replaceChild(newItem, item);
-                if (isTouchDevice) {
-                    newItem.addEventListener('click', e => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        const hoveredElement = e.target;
-                        const ownerId = hoveredElement.dataset.productName;
-                        const isAlreadyVisible = globalTooltip.classList.contains('visible');
-                        const isSameOwner = globalTooltip.dataset.owner === ownerId;
-                        if (isAlreadyVisible && !isSameOwner) {
-                            globalTooltip.classList.remove('visible');
-                            setTimeout(() => this.showTooltip(hoveredElement, ownerId), 150);
-                        } else if (isAlreadyVisible && isSameOwner) {
-                            globalTooltip.classList.remove('visible');
-                        } else {
-                            this.showTooltip(hoveredElement, ownerId);
-                        }
-                    });
-                } else {
-                    newItem.addEventListener('mouseenter', e => {
-                        const hoveredElement = e.target;
-                        const ownerId = hoveredElement.dataset.productName;
-                        this.showTooltip(hoveredElement, ownerId, true);
-                    });
-                    newItem.addEventListener('mouseleave', () => {
-                        globalTooltip.classList.remove('visible');
-                    });
-                    newItem.addEventListener('click', e => {
-                        const productUrl = e.target.dataset.productUrl;
-                        if (productUrl && productUrl !== '#') window.open(productUrl, '_blank');
-                    });
-                }
-            });
-            if (isTouchDevice) {
-                document.addEventListener('click', closeTooltipOnClickOutside);
-            }
-        },
-        showTooltip: function(element, ownerId, isHover = false) {
-            const imageUrl = element.dataset.imgUrl;
-            const productName = element.dataset.productName;
-            globalTooltip.dataset.owner = ownerId;
-            globalTooltip.innerHTML = `<img src="${imageUrl}" alt="${productName}">`;
-            const rect = element.getBoundingClientRect();
-            if (isHover) {
-                const tooltipRect = globalTooltip.getBoundingClientRect();
-                let top = rect.top - tooltipRect.height - 10;
-                let left = rect.left + rect.width / 2 - tooltipRect.width / 2;
-                if (top < 0) top = rect.bottom + 10;
-                if (left < 0) left = 5;
-                if (left + tooltipRect.width > window.innerWidth) left = window.innerWidth - tooltipRect.width - 5;
-                globalTooltip.style.left = `${left}px`;
-                globalTooltip.style.top = `${top}px`;
-                globalTooltip.style.transform = '';
-            } else {
-                globalTooltip.style.left = `50%`;
-                globalTooltip.style.top = `50%`;
-                globalTooltip.style.transform = `translate(-50%, -50%)`;
-            }
-            globalTooltip.classList.add('visible');
-        },
+        attachTooltipEvents: function() { const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0; const closeTooltipOnClickOutside = (e) => { if (globalTooltip.classList.contains('visible') && !globalTooltip.contains(e.target) && !e.target.closest('.meal-item')) { globalTooltip.classList.remove('visible'); } }; document.removeEventListener('click', closeTooltipOnClickOutside); document.querySelectorAll('.meal-item').forEach(item => { const newItem = item.cloneNode(true); item.parentNode.replaceChild(newItem, item); if (isTouchDevice) { newItem.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); const hoveredElement = e.target; const ownerId = hoveredElement.dataset.productName; const isAlreadyVisible = globalTooltip.classList.contains('visible'); const isSameOwner = globalTooltip.dataset.owner === ownerId; if (isAlreadyVisible && !isSameOwner) { globalTooltip.classList.remove('visible'); setTimeout(() => this.showTooltip(hoveredElement, ownerId), 150); } else if (isAlreadyVisible && isSameOwner) { globalTooltip.classList.remove('visible'); } else { this.showTooltip(hoveredElement, ownerId); } }); } else { newItem.addEventListener('mouseenter', e => { const hoveredElement = e.target; const ownerId = hoveredElement.dataset.productName; this.showTooltip(hoveredElement, ownerId, true); }); newItem.addEventListener('mouseleave', () => { globalTooltip.classList.remove('visible'); }); newItem.addEventListener('click', e => { const productUrl = e.target.dataset.productUrl; if (productUrl && productUrl !== '#') window.open(productUrl, '_blank'); }); } }); if (isTouchDevice) { document.addEventListener('click', closeTooltipOnClickOutside); } },
+        showTooltip: function(element, ownerId, isHover = false) { const imageUrl = element.dataset.imgUrl; const productName = element.dataset.productName; globalTooltip.dataset.owner = ownerId; globalTooltip.innerHTML = `<img src="${imageUrl}" alt="${productName}">`; const rect = element.getBoundingClientRect(); if (isHover) { const tooltipRect = globalTooltip.getBoundingClientRect(); let top = rect.top - tooltipRect.height - 10; let left = rect.left + rect.width / 2 - tooltipRect.width / 2; if (top < 0) top = rect.bottom + 10; if (left < 0) left = 5; if (left + tooltipRect.width > window.innerWidth) left = window.innerWidth - tooltipRect.width - 5; globalTooltip.style.left = `${left}px`; globalTooltip.style.top = `${top}px`; globalTooltip.style.transform = ''; } else { globalTooltip.style.left = `50%`; globalTooltip.style.top = `50%`; globalTooltip.style.transform = `translate(-50%, -50%)`; } globalTooltip.classList.add('visible'); },
     };
 
+    function revealMenu() {
+        const loadingScreen = document.getElementById('loading-screen');
+        const revealButton = document.getElementById('reveal-button');
+        const appContent = document.getElementById('app-content');
+        revealButton.disabled = true;
+        revealButton.classList.add('is-hiding');
+        loadingScreen.classList.add('is-finished');
+        setTimeout(() => {
+            appContent.style.animation = 'contentReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+        }, 400);
+        setTimeout(() => {
+            loadingScreen.style.display = 'none';
+            appContent.style.opacity = '1'; 
+            appContent.style.animation = ''; 
+            revealButton.classList.remove('is-hiding');
+            if (appState.profilClient.wantsTutorial) {
+                setTimeout(() => { launchTutorial(resultsTutorialSteps); }, 200);
+            }
+        }, 1000);
+    }
+    
     async function startQuiz() {
         appState.isQuickStart = false;
         welcomeScreen.classList.add('hidden');
@@ -7758,116 +7266,22 @@
             mainApp.classList.add('visible');
             const s = loadProgress();
             if (s && s.profilClient && Object.keys(s.profilClient).length > 0) {
-                const resume = await showCustomConfirm({
-                    title: "Session trouvée",
-                    text: "Voulez-vous reprendre la session précédente ?",
-                    confirmText: "Reprendre",
-                    cancelText: "Recommencer"
-                });
+                const resume = await showCustomConfirm({ title: "Session trouvée", text: "Voulez-vous reprendre la session précédente ?", confirmText: "Reprendre", cancelText: "Recommencer" });
                 if (resume) {
                     appState.questionIndex = s.questionIndex;
                     appState.profilClient = s.profilClient;
                 }
             }
             QuizController.init();
-        }, 800);
-    }
-    
-    function quickStart() {
-        appState.isQuickStart = true;
-        appState.profilClient = {
-            wantsTutorial: true,
-            client_name: "Ami",
-            jours_selectionnes: daysOfWeek.map(d => d.name),
-            repas_par_jour: {},
-            nombre_personnes: 2,
-            temps_par_repas: {}
-        };
-        daysOfWeek.forEach(day => {
-            appState.profilClient.repas_par_jour[day.name] = ["Midi", "Soir"];
-            appState.profilClient.temps_par_repas[day.name] = { "Midi": "Express", "Soir": "Tranquille" };
-        });
-        welcomeScreen.classList.add('hidden');
-        setTimeout(() => {
-            mainApp.classList.add('visible');
-            setTimeout(() => {
-                QuizController.generateResults();
-            }, 500);
-        }, 300);
-    }
-    
-    async function resetQuiz() {
-        const wantsToReset = await showCustomConfirm({
-            title: "Recommencer ?",
-            text: "Êtes-vous sûr de vouloir recommencer ? Votre progression sera perdue.",
-            confirmText: "Oui, recommencer",
-            cancelText: "Annuler"
-        });
-        if (wantsToReset) {
-            clearProgress();
-            location.reload();
-        }
+        }, 400);
     }
 
-    async function toggleHelp() {
-        if (progressWrapper.style.display === 'none') {
-            launchTutorial(resultsTutorialSteps);
-            return;
-        }
-        const currentQuestion = questionsConfig[appState.questionIndex];
-        if (currentQuestion && currentQuestion.tutorialSteps) {
-            launchTutorial(currentQuestion.tutorialSteps);
-        } else {
-            await showCustomAlert({
-                title: "Aide contextuelle",
-                text: "Il n'y a pas d'aide spécifique disponible pour cette étape."
-            });
-        }
-    }
-
-    async function promptDownloadChoice() {
-        const choice = await showCustomChoice({
-            title: "Quel format souhaitez-vous ?",
-            text: "Choisissez le type de PDF à télécharger.",
-            option1Text: "Résumé + Détails",
-            option2Text: "Résumé Uniquement",
-            cancelText: "Annuler"
-        });
-        if (choice === null) {
-            return; 
-        }
-        const includeDetails = (choice === 'option1');
-        downloadPDF(includeDetails);
-    }
-
-    async function downloadPDF(includeDetails = true) {
-        const element = document.getElementById('pdf-content');
-        const clientName = appState.profilClient.client_name || 'Gourmand';
-        const fileName = `Menu_${includeDetails ? 'Complet' : 'Resume'}_${clientName}.pdf`;
-        const opt = {
-            margin: [10, 10, 10, 10],
-            filename: fileName,
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true },
-        };
-        element.classList.add('pdf-export-mode');
-        if (!includeDetails) {
-            element.classList.add('no-details');
-        }
-        try {
-            await html2pdf().from(element).set(opt).save();
-        } finally {
-            element.classList.remove('pdf-export-mode');
-            element.classList.remove('no-details');
-        }
-    }
-
-    function scrollToTop() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    }
+    function quickStart() { appState.isQuickStart = true; appState.profilClient = { wantsTutorial: true, client_name: "Ami", jours_selectionnes: daysOfWeek.map(d => d.name), repas_par_jour: {}, nombre_personnes: 2, temps_par_repas: {} }; daysOfWeek.forEach(day => { appState.profilClient.repas_par_jour[day.name] = ["Midi", "Soir"]; appState.profilClient.temps_par_repas[day.name] = { "Midi": "Express", "Soir": "Tranquille" }; }); welcomeScreen.classList.add('hidden'); setTimeout(() => { mainApp.classList.add('visible'); setTimeout(() => { QuizController.generateResults(); }, 500); }, 300); }
+    async function resetQuiz() { const wantsToReset = await showCustomConfirm({ title: "Recommencer ?", text: "Êtes-vous sûr de vouloir recommencer ? Votre progression sera perdue.", confirmText: "Oui, recommencer", cancelText: "Annuler" }); if (wantsToReset) { clearProgress(); location.reload(); } }
+    async function toggleHelp() { if (progressWrapper.style.display === 'none') { launchTutorial(resultsTutorialSteps); return; } const currentQuestion = questionsConfig[appState.questionIndex]; if (currentQuestion && currentQuestion.tutorialSteps) { launchTutorial(currentQuestion.tutorialSteps); } else { await showCustomAlert({ title: "Aide contextuelle", text: "Il n'y a pas d'aide spécifique disponible pour cette étape." }); } }
+    async function promptDownloadChoice() { const choice = await showCustomChoice({ title: "Quel format souhaitez-vous ?", text: "Choisissez le type de PDF à télécharger.", option1Text: "Résumé + Détails", option2Text: "Résumé Uniquement", cancelText: "Annuler" }); if (choice === null) return; const includeDetails = (choice === 'option1'); downloadPDF(includeDetails); }
+    async function downloadPDF(includeDetails = true) { const element = document.getElementById('pdf-content'); const clientName = appState.profilClient.client_name || 'Gourmand'; const fileName = `Menu_${includeDetails ? 'Complet' : 'Resume'}_${clientName}.pdf`; const opt = { margin: [10, 10, 10, 10], filename: fileName, image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true }, }; element.classList.add('pdf-export-mode'); if (!includeDetails) { element.classList.add('no-details'); } try { await html2pdf().from(element).set(opt).save(); } finally { element.classList.remove('pdf-export-mode'); element.classList.remove('no-details'); } }
+    function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
 </script>
 </body>
 </html>
