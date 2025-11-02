@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🥩 Les Conseils du Boucher - Menu Sur-Mesure</title>
+    <title> Les Conseils du Boucher - Menu Sur-Mesure</title>
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/metscarnes/bimi-metscarnes/main/Logo%20Mets%20Carn%C3%A9s%20HD.png">
 
     <script src="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.js.iife.js"></script>
@@ -7158,7 +7158,59 @@
         applyMealPreset: function(p, e) { document.querySelectorAll('#meal-presets .answer-card').forEach(b => b.classList.remove('selected')); if (e) e.classList.add('selected'); const d = appState.profilClient.jours_selectionnes || []; d.forEach(day => { appState.profilClient.repas_par_jour[day] = []; if (p === 'midi' || p === 'all') appState.profilClient.repas_par_jour[day].push('Midi'); if (p === 'soir' || p === 'all') appState.profilClient.repas_par_jour[day].push('Soir'); }); this.updateMealsUI(); document.querySelectorAll('.btn-next-question').forEach(btn => btn.classList.remove('is-disabled')); },
         toggleMeal: function(el, day, meal) { el.classList.toggle('selected'); const meals = appState.profilClient.repas_par_jour[day] || []; const i = meals.indexOf(meal); if (i > -1) meals.splice(i, 1); else meals.push(meal); appState.profilClient.repas_par_jour[day] = meals; const hasSelection = Object.values(appState.profilClient.repas_par_jour).some(m => m.length > 0); document.querySelectorAll('.btn-next-question').forEach(btn => btn.classList.toggle('is-disabled', !hasSelection)); },
         updateMealsUI:function(){document.querySelectorAll('#meal-details .meal-day-section').forEach(s=>{const d=s.dataset.day,m=appState.profilClient.repas_par_jour[d]||[];s.querySelectorAll('.meal-time-card').forEach(c=>c.classList.toggle('selected',m.includes(c.dataset.meal)))})},
-        renderTypeTimePerMeal: function(q) { const v = 'temps_par_repas'; if (!appState.profilClient[v]) { appState.profilClient[v] = {}; Object.keys(appState.profilClient.repas_par_jour).forEach(day => { const meals = appState.profilClient.repas_par_jour[day] || []; if (meals.length > 0) { if (!appState.profilClient[v][day]) appState.profilClient[v][day] = {}; meals.forEach(meal => { appState.profilClient[v][day][meal] = 'Tranquille'; }); } }); } const o = [{l:"⏱️ Express",v:"Express",d:"(< 15 min)"},{l:"🍳 Tranquille",v:"Tranquille",d:"(15-45 min)"},{l:"👨‍🍳 Passionné",v:"Passionné",d:"(> 45 min)"}]; const hasSelection = appState.profilClient[v] && Object.keys(appState.profilClient[v]).length > 0; const disabledClass = hasSelection ? '' : 'is-disabled'; let h = `<div class="meal-day-section" style="margin-bottom:2rem"><h3 class="meal-day-title">⚡ Quel est votre style ?</h3><div class="answers" id="time-presets"><div class="answer-card" onclick="QuizController.applyTimePreset('pro_presse',this)"><h4>Le Pro pressé 🏃</h4><p style="font-size:.95rem;color:var(--text-secondary)">Je suis toujours pressé, tout doit être rapide.</p></div><div class="answer-card" onclick="QuizController.applyTimePreset('weekend_lover',this)"><h4>L'Épicurien du Week-end 🍷</h4><p style="font-size:.95rem;color:var(--text-secondary)">Rapide en semaine, mais passionné dès le vendredi soir.</p></div><div class="answer-card" onclick="QuizController.applyTimePreset('chef_cuisinier',this)"><h4>Le Chef Cuisinier 👨‍🍳</h4><p style="font-size:.95rem;color:var(--text-secondary)">Chaque repas est une occasion, je prends mon temps.</p></div></div></div><button class="action-button btn-pulse btn-personnaliser" style="margin-bottom:1rem" onclick="QuizController.toggleDetailView('time-details')">Personnaliser</button><button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion(event)">Suivant</button><div id="time-details" class="hidden-section" style="margin-top:2rem">`; const r = appState.profilClient.repas_par_jour || {}, j = sortSelectedDays(Object.keys(r)); if (j.length === 0 || j.every(d => !r[d] || r[d].length === 0)) { h += `<p style="text-align:center;padding:1rem">Veuillez sélectionner des repas d'abord.</p>` } else { j.forEach(d => { if (r[d] && r[d].length > 0) { const e = daysOfWeek.find(i => i.name === d)?.emoji || '📅'; h += `<div class="meal-day-section" data-day="${d}"><h3 class="meal-day-title">${e} ${d}</h3>`; r[d].forEach(m => { const c = appState.profilClient.temps_par_repas?.[d]?.[m] || 'Tranquille'; h += `<div class="meal-time-group" data-day="${d}" data-meal="${m}"><h4 class="meal-time-group-title">${m === 'Midi' ? '☀️ Pour le midi :' : '🌙 Pour le soir :'}</h4><div class="meal-buttons">${o.map(opt => `<button class="meal-time-card ${c === opt.v ? 'selected' : ''}" data-value="${opt.v}" onclick="QuizController.selectTime(this,'${d}','${m}')">${opt.l.replace('⏱️ ', '').replace('🍳 ', '').replace('👨‍🍳 ', '')}<br><small>${opt.d}</small></button>`).join('')}</div></div>` }); h += `</div>` } }) } h += `<button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion(event)">Suivant</button>`; return h + '</div>'; },
+renderTypeTimePerMeal: function(q) {
+            const v = 'temps_par_repas';
+            if (!appState.profilClient[v]) {
+                appState.profilClient[v] = {};
+                Object.keys(appState.profilClient.repas_par_jour).forEach(day => {
+                    const meals = appState.profilClient.repas_par_jour[day] || [];
+                    if (meals.length > 0) {
+                        if (!appState.profilClient[v][day]) appState.profilClient[v][day] = {};
+                        meals.forEach(meal => {
+                            appState.profilClient[v][day][meal] = 'Tranquille';
+                        });
+                    }
+                });
+            }
+            const o = [{l:"⏱️ Express",v:"Express",d:"(< 15 min)"},{l:"🍳 Tranquille",v:"Tranquille",d:"(15-45 min)"},{l:"👨‍🍳 Passionné",v:"Passionné",d:"(> 45 min)"}];
+            const hasSelection = appState.profilClient[v] && Object.keys(appState.profilClient[v]).length > 0;
+            const disabledClass = hasSelection ? '' : 'is-disabled';
+            
+            // ✅ CORRECTION APPLIQUÉE ICI : Les balises <p> ont été supprimées
+            let h = `
+                <div class="meal-day-section" style="margin-bottom:2rem">
+                    <h3 class="meal-day-title">⚡ Quel est votre style ?</h3>
+                    <div class="answers" id="time-presets">
+                        <div class="answer-card" onclick="QuizController.applyTimePreset('pro_presse',this)"><h4>Le Pro pressé 🏃</h4></div>
+                        <div class="answer-card" onclick="QuizController.applyTimePreset('weekend_lover',this)"><h4>L'Épicurien du Week-end 🍷</h4></div>
+                        <div class="answer-card" onclick="QuizController.applyTimePreset('chef_cuisinier',this)"><h4>Le Chef Cuisinier 👨‍🍳</h4></div>
+                    </div>
+                </div>
+                <button class="action-button btn-pulse btn-personnaliser" style="margin-bottom:1rem" onclick="QuizController.toggleDetailView('time-details')">Personnaliser</button>
+                <button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion(event)">Suivant</button>
+                <div id="time-details" class="hidden-section" style="margin-top:2rem">
+            `;
+
+            const r = appState.profilClient.repas_par_jour || {}, j = sortSelectedDays(Object.keys(r));
+            if (j.length === 0 || j.every(d => !r[d] || r[d].length === 0)) {
+                h += `<p style="text-align:center;padding:1rem">Veuillez sélectionner des repas d'abord.</p>`
+            } else {
+                j.forEach(d => {
+                    if (r[d] && r[d].length > 0) {
+                        const e = daysOfWeek.find(i => i.name === d)?.emoji || '📅';
+                        h += `<div class="meal-day-section" data-day="${d}"><h3 class="meal-day-title">${e} ${d}</h3>`;
+                        r[d].forEach(m => {
+                            const c = appState.profilClient.temps_par_repas?.[d]?.[m] || 'Tranquille';
+                            h += `<div class="meal-time-group" data-day="${d}" data-meal="${m}"><h4 class="meal-time-group-title">${m === 'Midi' ? '☀️ Pour le midi :' : '🌙 Pour le soir :'}</h4><div class="meal-buttons">${o.map(opt => `<button class="meal-time-card ${c === opt.v ? 'selected' : ''}" data-value="${opt.v}" onclick="QuizController.selectTime(this,'${d}','${m}')">${opt.l.replace('⏱️ ', '').replace('🍳 ', '').replace('👨‍🍳 ', '')}<br><small>${opt.d}</small></button>`).join('')}</div></div>`
+                        });
+                        h += `</div>`
+                    }
+                })
+            }
+            h += `<button class="action-button btn-next-question ${disabledClass}" onclick="QuizController.nextQuestion(event)">Suivant</button>`;
+            return h + '</div>';
+        },
+
         applyTimePreset: function(p, e) { document.querySelectorAll('#time-presets .answer-card').forEach(b => b.classList.remove('selected')); if (e) e.classList.add('selected'); const v = 'temps_par_repas'; if (!appState.profilClient[v]) appState.profilClient[v] = {}; Object.keys(appState.profilClient.repas_par_jour).forEach(d => { const m = appState.profilClient.repas_par_jour[d] || []; if (m.length > 0) { if (!appState.profilClient[v][d]) appState.profilClient[v][d] = {}; m.forEach(meal => { let val; const isWk = ['Samedi', 'Dimanche'].includes(d); switch (p) { case 'pro_presse': val = 'Express'; break; case 'weekend_lover': val = isWk || d === 'Vendredi' && meal === 'Soir' ? 'Passionné' : meal === 'Midi' ? 'Express' : 'Tranquille'; break; case 'chef_cuisinier': val = 'Passionné'; break; default: val = 'Tranquille' } appState.profilClient[v][d][meal] = val; }); } }); this.updateTimesUI(); document.querySelectorAll('.btn-next-question').forEach(btn => btn.classList.remove('is-disabled')); },
         selectTime: function(e, d, m) { e.parentElement.querySelectorAll('.meal-time-card').forEach(b => b.classList.remove('selected')); e.classList.add('selected'); const v = 'temps_par_repas'; if (!appState.profilClient[v]) appState.profilClient[v] = {}; if (!appState.profilClient[v][d]) appState.profilClient[v][d] = {}; appState.profilClient[v][d][m] = e.dataset.value; let totalRepasAPlanifier = 0; Object.values(appState.profilClient.repas_par_jour).forEach(repas => { totalRepasAPlanifier += repas.length; }); let totalRepasConfigures = 0; if (appState.profilClient.temps_par_repas) { Object.values(appState.profilClient.temps_par_repas).forEach(jour => { totalRepasConfigures += Object.keys(jour).length; }); } const allSet = totalRepasAPlanifier === totalRepasConfigures; document.querySelectorAll('.btn-next-question').forEach(btn => { btn.classList.toggle('is-disabled', !allSet); }); document.querySelectorAll('#time-presets .answer-card').forEach(b => b.classList.remove('selected')); },
         updateTimesUI:function(){document.querySelectorAll('.meal-time-group').forEach(g=>{const d=g.dataset.day,m=g.dataset.meal,c=appState.profilClient.temps_par_repas?.[d]?.[m];if(c)g.querySelectorAll('.meal-time-card').forEach(card=>card.classList.toggle('selected',card.dataset.value===c))})},
