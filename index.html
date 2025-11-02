@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Les Conseils du Boucher - Menu Sur-Mesure</title>
+    <title>🥩 Les Conseils du Boucher - Menu Sur-Mesure</title>
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/metscarnes/bimi-metscarnes/main/Logo%20Mets%20Carn%C3%A9s%20HD.png">
 
     <script src="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.js.iife.js"></script>
@@ -218,6 +218,7 @@
        ÉCRAN DE CHARGEMENT - EFFET RIDEAUX ULTRA SMOOTH
        ===================================================== */
     .loading-screen {
+
     position: fixed;
     top: 0;
     left: 0;
@@ -333,6 +334,11 @@
     </div>
 
     <script>
+    // ✅ AJOUTEZ CE BLOC AU TOUT DÉBUT DE VOTRE SCRIPT
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
         const allProducts = [
   {
     "Produit": "Aiguillette baronne de boeuf",
@@ -7342,6 +7348,12 @@
     async function promptDownloadChoice() { const choice = await showCustomChoice({ title: "Quel format souhaitez-vous ?", text: "Choisissez le type de PDF à télécharger.", option1Text: "Résumé + Détails", option2Text: "Résumé Uniquement", cancelText: "Annuler" }); if (choice === null) return; const includeDetails = (choice === 'option1'); downloadPDF(includeDetails); }
     async function downloadPDF(includeDetails = true) { const element = document.getElementById('pdf-content'); const clientName = appState.profilClient.client_name || 'Gourmand'; const fileName = `Menu_${includeDetails ? 'Complet' : 'Resume'}_${clientName}.pdf`; const opt = { margin: [10, 10, 10, 10], filename: fileName, image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true }, }; element.classList.add('pdf-export-mode'); if (!includeDetails) { element.classList.add('no-details'); } try { await html2pdf().from(element).set(opt).save(); } finally { element.classList.remove('pdf-export-mode'); element.classList.remove('no-details'); } }
     function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+</script>
+<!-- ✅ AJOUTEZ CE NOUVEAU BLOC SCRIPT ICI -->
+<script>
+    window.onload = function() {
+        window.scrollTo(0, 0);
+    };
 </script>
 </body>
 </html>
