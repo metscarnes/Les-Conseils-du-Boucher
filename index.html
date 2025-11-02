@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Les Conseils du Boucher - Menu Sur-Mesure</title>
+    <title>🥩 Les Conseils du Boucher - Menu Sur-Mesure</title>
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/metscarnes/bimi-metscarnes/main/Logo%20Mets%20Carn%C3%A9s%20HD.png">
 
     <script src="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.js.iife.js"></script>
@@ -7175,7 +7175,33 @@
 
     function revealMenu() { const loadingScreen = document.getElementById('loading-screen'); const revealButton = document.getElementById('reveal-button'); const appContent = document.getElementById('app-content'); revealButton.disabled = true; revealButton.classList.add('is-hiding'); loadingScreen.classList.add('is-finished'); setTimeout(() => { appContent.style.animation = 'contentReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards'; }, 400); setTimeout(() => { loadingScreen.style.display = 'none'; appContent.style.opacity = '1'; appContent.style.animation = ''; revealButton.classList.remove('is-hiding'); if (appState.profilClient.wantsTutorial) { setTimeout(() => { launchTutorial(resultsTutorialSteps); }, 200); } }, 1000); }
     async function startQuiz() { appState.isQuickStart = false; welcomeScreen.classList.add('hidden'); setTimeout(async () => { mainApp.classList.add('visible'); const s = loadProgress(); if (s && s.profilClient && Object.keys(s.profilClient).length > 0) { const resume = await showCustomConfirm({ title: "Session trouvée", text: "Voulez-vous reprendre la session précédente ?", confirmText: "Reprendre", cancelText: "Recommencer" }); if (resume) { appState.questionIndex = s.questionIndex; appState.profilClient = s.profilClient; } else { const wantsHelp = await showCustomConfirm({ title: "Besoin d'un coup de main ?", text: "Souhaitez-vous activer l'aide guidée pour vous présenter les étapes clés ?", confirmText: "Oui, avec plaisir !", cancelText: "Non, merci" }); appState.profilClient.wantsTutorial = wantsHelp; appState.profilClient.wantsStepByStepTutorials = wantsHelp; } } else { const wantsHelp = await showCustomConfirm({ title: "Besoin d'un coup de main ?", text: "Souhaitez-vous activer l'aide guidée pour vous présenter les étapes clés ?", confirmText: "Oui, avec plaisir !", cancelText: "Non, merci" }); appState.profilClient.wantsTutorial = wantsHelp; appState.profilClient.wantsStepByStepTutorials = wantsHelp; } QuizController.init(); }, 400); }
-    function quickStart() { appState.isQuickStart = true; appState.profilClient = { wantsTutorial: true, client_name: "Ami", jours_selectionnes: daysOfWeek.map(d => d.name), repas_par_jour: {}, nombre_personnes: 2, temps_par_repas: {} }; daysOfWeek.forEach(day => { appState.profilClient.repas_par_jour[day.name] = ["Midi", "Soir"]; appState.profilClient.temps_par_repas[day.name] = { "Midi": "Express", "Soir": "Tranquille" }; }); welcomeScreen.classList.add('hidden'); setTimeout(() => { mainApp.classList.add('visible'); setTimeout(() => { QuizController.generateResults(); }, 500); }, 300); }
+function quickStart() {
+        appState.isQuickStart = true;
+        appState.profilClient = {
+            wantsTutorial: true,
+            client_name: "Ami",
+            jours_selectionnes: daysOfWeek.map(d => d.name),
+            repas_par_jour: {},
+            nombre_personnes: 2,
+            temps_par_repas: {}
+        };
+        daysOfWeek.forEach(day => {
+            appState.profilClient.repas_par_jour[day.name] = ["Midi", "Soir"];
+            appState.profilClient.temps_par_repas[day.name] = { "Midi": "Express", "Soir": "Tranquille" };
+        });
+
+        // ✅ CORRECTION : On gère la transition et on appelle directement la génération de résultats
+        welcomeScreen.classList.add('hidden');
+        
+        setTimeout(() => {
+            // On s'assure que l'application principale est prête mais vide
+            mainApp.classList.add('visible');
+            appContent.innerHTML = ''; 
+
+            // On lance directement la génération des résultats (qui affichera les rideaux)
+            QuizController.generateResults();
+        }, 400); // Délai pour une transition douce depuis l'écran d'accueil
+    }
     async function resetQuiz() { const wantsToReset = await showCustomConfirm({ title: "Recommencer ?", text: "Êtes-vous sûr de vouloir recommencer ? Votre progression sera perdue.", confirmText: "Oui, recommencer", cancelText: "Annuler" }); if (wantsToReset) { clearProgress(); location.reload(); } }
     async function toggleHelp() { if (progressWrapper.style.display === 'none') { launchTutorial(resultsTutorialSteps); return; } const currentQuestion = questionsConfig[appState.questionIndex]; if (currentQuestion && currentQuestion.tutorialSteps) { launchTutorial(currentQuestion.tutorialSteps); } else { await showCustomAlert({ title: "Aide contextuelle", text: "Il n'y a pas d'aide spécifique disponible pour cette étape." }); } }
     async function promptDownloadChoice() { const choice = await showCustomChoice({ title: "Quel format souhaitez-vous ?", text: "Choisissez le type de PDF à télécharger.", option1Text: "Résumé + Détails", option2Text: "Résumé Uniquement", cancelText: "Annuler" }); if (choice === null) return; const includeDetails = (choice === 'option1'); downloadPDF(includeDetails); }
