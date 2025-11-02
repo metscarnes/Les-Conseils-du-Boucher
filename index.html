@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Les Conseils du Boucher - Menu Sur-Mesure</title>
+    <title>🥩 Les Conseils du Boucher - Menu Sur-Mesure</title>
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/metscarnes/bimi-metscarnes/main/Logo%20Mets%20Carn%C3%A9s%20HD.png">
 
     <script src="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.js.iife.js"></script>
@@ -15,73 +15,25 @@
     <style>
     :root { --primary: #edc196; --accent: #cc8956; --dark: #040508; --dark-secondary: #50241c; --text-light: #edc196; --text-secondary: rgba(237, 193, 150, 0.7); --border-subtle: rgba(204, 137, 86, 0.2); --glow: rgba(237, 193, 150, 0.4); }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-    body { font-family: 'Playpen Sans', sans-serif; background: var(--dark); color: var(--text-light); overflow-x: hidden; min-height: 100vh; position: relative; }
+    html, body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; height: 100%; }
+    body { font-family: 'Playpen Sans', sans-serif; background: var(--dark); color: var(--text-light); overflow-x: hidden; min-height: 100%; position: relative; }
     body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1; opacity: 0.6; }
     h1, .welcome-title, .question-title, .meal-day-title, .result-day h3, #modal-title, .planning-table th, .meat-filter-section h3, .driver-popover-title { font-family: 'Loyola Pro Bold', serif; }
-   /* =====================================================
-   TUTORIEL DRIVER.JS
-   ===================================================== */
-.driver-overlay { background: rgba(4, 5, 8, 0.20); }
-.driver-popover { background: var(--dark-secondary); border-radius: 0; box-shadow: 0 30px 90px rgba(0, 0, 0, 0.9), 0 0 1px 1px rgba(237, 193, 150, 0.15); border: 1px solid var(--accent); max-width: 440px; animation: elegantFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
-@keyframes elegantFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-.driver-popover-title {
-    font-size: 1.3rem;
-    color: var(--primary);
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    /* ✅ Police ajoutée ici pour garantir la cohérence */
-    font-family: 'Loyola Pro Bold', serif;
-}
-
-.driver-popover-description {
-    font-family: 'Playpen Sans', sans-serif;
-    font-size: 1rem;
-    line-height: 1.8;
-    color: var(--text-light);
-}
-
-.driver-popover-footer { display: flex; gap: 0.75rem; justify-content: flex-end; border-top: 1px solid var(--border-subtle); padding-top: 1.2rem; margin-top: 1.2rem; }
-.driver-popover-progress-text { color: var(--text-secondary); font-size: 0.9rem; }
-
-.driver-popover-prev-btn, .driver-popover-next-btn, .driver-popover-close-btn {
-    padding: 0.7rem 1.5rem;
-    border-radius: 0;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    /* ✅ LA CORRECTION PRINCIPALE EST ICI : On ajoute la police pour les boutons */
-    font-family: 'Loyola Pro Bold', serif; 
-}
-
-.driver-popover-next-btn { background: var(--accent); color: var(--dark); box-shadow: 0 4px 15px rgba(204, 137, 86, 0.4); }
-.driver-popover-next-btn:hover { background: var(--primary); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(237, 193, 150, 0.5); }
-.driver-popover-prev-btn { background: transparent; color: var(--text-light); border: 1px solid var(--accent); }
-.driver-popover-prev-btn:hover { background: rgba(237, 193, 150, 0.1); border-color: var(--primary); }
-.driver-popover-close-btn { background: transparent; color: var(--text-light); opacity: 0.8; }
-.driver-popover-close-btn:hover { opacity: 1; color: var(--primary); }
-   .welcome-screen {
-    position: fixed; /* ✅ Reverti en 'fixed' pour un véritable overlay */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100dvh; /* ✅ LA CORRECTION CLÉ : 'dvh' pour Dynamic Viewport Height */
-    background: linear-gradient(135deg, var(--dark) 0%, #0a0a0c 50%, var(--dark-secondary) 100%);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    transition: opacity 1.2s ease, transform 1.2s ease;
-    padding: 2rem 1rem; /* ✅ Un peu d'espace pour les petits écrans */
-    overflow: auto; /* ✅ Permet le scroll si le contenu est vraiment trop grand (sécurité) */
-}
+    .driver-overlay { background: rgba(4, 5, 8, 0.20); }
+    .driver-popover { background: var(--dark-secondary); border-radius: 0; box-shadow: 0 30px 90px rgba(0, 0, 0, 0.9), 0 0 1px 1px rgba(237, 193, 150, 0.15); border: 1px solid var(--accent); max-width: 440px; animation: elegantFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+    @keyframes elegantFadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .driver-popover-title { font-size: 1.3rem; color: var(--primary); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; font-family: 'Loyola Pro Bold', serif; }
+    .driver-popover-description { font-family: 'Playpen Sans', sans-serif; font-size: 1rem; line-height: 1.8; color: var(--text-light); }
+    .driver-popover-footer { display: flex; gap: 0.75rem; justify-content: flex-end; border-top: 1px solid var(--border-subtle); padding-top: 1.2rem; margin-top: 1.2rem; }
+    .driver-popover-progress-text { color: var(--text-secondary); font-size: 0.9rem; }
+    .driver-popover-prev-btn, .driver-popover-next-btn, .driver-popover-close-btn { padding: 0.7rem 1.5rem; border-radius: 0; font-weight: 600; border: none; cursor: pointer; transition: all 0.3s ease; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; font-family: 'Loyola Pro Bold', serif; }
+    .driver-popover-next-btn { background: var(--accent); color: var(--dark); box-shadow: 0 4px 15px rgba(204, 137, 86, 0.4); }
+    .driver-popover-next-btn:hover { background: var(--primary); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(237, 193, 150, 0.5); }
+    .driver-popover-prev-btn { background: transparent; color: var(--text-light); border: 1px solid var(--accent); }
+    .driver-popover-prev-btn:hover { background: rgba(237, 193, 150, 0.1); border-color: var(--primary); }
+    .driver-popover-close-btn { background: transparent; color: var(--text-light); opacity: 0.8; }
+    .driver-popover-close-btn:hover { opacity: 1; color: var(--primary); }
+    .welcome-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100dvh; background: linear-gradient(135deg, var(--dark) 0%, #0a0a0c 50%, var(--dark-secondary) 100%); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 1.2s ease, transform 1.2s ease; overflow-y: auto; padding: 2rem 1rem; }
     .welcome-screen.hidden { opacity: 0; pointer-events: none; transform: scale(1.1); }
     .welcome-content { text-align: center; max-width: 900px; padding: 2rem 1.5rem; animation: majestueuxSlideUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s backwards; position: relative; z-index: 2; }
     .welcome-logo { font-size: 6rem; margin-bottom: 3rem; filter: drop-shadow(0 20px 60px rgba(237, 193, 150, 0.5)) drop-shadow(0 0 30px rgba(204, 137, 86, 0.3)); animation: majestueuxFloat 5s ease-in-out infinite; position: relative; }
@@ -217,20 +169,7 @@
     /* =====================================================
        ÉCRAN DE CHARGEMENT - EFFET RIDEAUX ULTRA SMOOTH
        ===================================================== */
-    .loading-screen {
-
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%; /* ✅ CHANGÉ: de '100vh' à '100%' */
-    background: transparent;
-    z-index: 99999;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
+    .loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: transparent; z-index: 99999; display: none; justify-content: center; align-items: center; overflow: hidden; }
     .loading-content { position: relative; z-index: 3; text-align: center; padding: 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; }
     .loading-phase-1, .loading-phase-2 { transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
     .loading-phase-2 { display: none; opacity: 0; transform: translateY(20px); }
@@ -269,7 +208,7 @@
        RESPONSIVE
        ===================================================== */
     @media (max-width: 768px) {
-        .main-app { padding: 1.5rem 0.8rem; } .container { padding: 2.5rem 1.5rem; } .header { padding-top: 60px; margin-bottom: 2rem; } .header-actions { top: 0; left: 50%; transform: translateX(-50%); width: auto; } h1#main-title { font-size: 2.2rem; } .question-title { font-size: 1.6rem; } .welcome-buttons { flex-direction: column; } .btn-welcome { width: 100%; } .days-grid, .answers, .meal-buttons { grid-template-columns: repeat(2, 1fr); gap: 1rem; } .result-meal { flex-direction: column; text-align: center; } .result-meal-img { width: 100%; max-width: 350px; margin: 0 auto; } .meat-filter-container { grid-template-columns: 1fr; } .day-card.selected::after, .answer-card.selected::after, .meal-time-card.selected::after, .meat-btn.selected-include::after, .meat-btn.selected-exclude::after { width: 28px; height: 28px; font-size: 0.95rem; top: -10px; right: -10px; } .planning-table thead { display: none; } .planning-table, .planning-table tbody, .planning-table tr, .planning-table td { display: block; width: 100%; } .planning-table tr { margin-bottom: 1.5rem; border: 1px solid var(--border-subtle); border-radius: 0; padding: 1.5rem; background: rgba(80, 36, 28, 0.3); } .planning-table td { text-align: left; padding: 0.8rem; border: none; display: flex; align-items: center; gap: 1rem; } .planning-table td[data-label="Jour"] { font-size: 1.6rem; color: var(--primary); padding-bottom: 0.8rem; margin-bottom: 0.8rem; border-bottom: 1px solid var(--border-subtle); } .planning-table td::before { font-weight: bold; color: var(--text-secondary); } .planning-table td:nth-of-type(2)::before { content: ☀️ Midi:'; } .planning-table td:nth-of-type(3)::before { content: '🌙 Soir:'; } .loading-text { font-size: 1.5rem; } .loading-bar-container { max-width: 300px; }
+        .main-app { padding: 1.5rem 0.8rem; } .container { padding: 2.5rem 1.5rem; } .header { padding-top: 60px; margin-bottom: 2rem; } .header-actions { top: 0; left: 50%; transform: translateX(-50%); width: auto; } h1#main-title { font-size: 2.2rem; } .question-title { font-size: 1.6rem; } .welcome-buttons { flex-direction: column; } .btn-welcome { width: 100%; } .days-grid, .answers, .meal-buttons { grid-template-columns: repeat(2, 1fr); gap: 1rem; } .result-meal { flex-direction: column; text-align: center; } .result-meal-img { width: 100%; max-width: 350px; margin: 0 auto; } .meat-filter-container { grid-template-columns: 1fr; } .day-card.selected::after, .answer-card.selected::after, .meal-time-card.selected::after, .meat-btn.selected-include::after, .meat-btn.selected-exclude::after { width: 28px; height: 28px; font-size: 0.95rem; top: -10px; right: -10px; } .planning-table thead { display: none; } .planning-table, .planning-table tbody, .planning-table tr, .planning-table td { display: block; width: 100%; } .planning-table tr { margin-bottom: 1.5rem; border: 1px solid var(--border-subtle); border-radius: 0; padding: 1.5rem; background: rgba(80, 36, 28, 0.3); } .planning-table td { text-align: left; padding: 0.8rem; border: none; display: flex; align-items: center; gap: 1rem; } .planning-table td[data-label="Jour"] { font-size: 1.6rem; color: var(--primary); padding-bottom: 0.8rem; margin-bottom: 0.8rem; border-bottom: 1px solid var(--border-subtle); } .planning-table td::before { font-weight: bold; color: var(--text-secondary); } .planning-table td:nth-of-type(2)::before { content: '☀️ Midi:'; } .planning-table td:nth-of-type(3)::before { content: '🌙 Soir:'; } .loading-text { font-size: 1.5rem; } .loading-bar-container { max-width: 300px; }
     }
     </style>
 </head>
@@ -334,7 +273,10 @@
     </div>
 
     <script>
-        const allProducts = [
+    if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+    window.scrollTo(0, 0);
+    
+    const allProducts = [
   {
     "Produit": "Aiguillette baronne de boeuf",
     "Categorie": "Bœuf",
@@ -513,36 +455,6 @@
     "image_url": "https://metscarnes.odoo.com/web/image/product.product/96/image_1920",
     "unite": "poids",
     "quantite_par_personne": 200,
-    "poids_unitaire_g": null
-  },
-  {
-    "Produit": "Barde",
-    "Categorie": "Porc",
-    "Destination": "A griller",
-    "NutriScore": "E",
-    "Energie": 800,
-    "Proteines": 2,
-    "Lipides": 85,
-    "Glucides": 0,
-    "Sel": 0,
-    "Fer": 0,
-    "Zinc": 0,
-    "Selenium": 0,
-    "VitamineB12": 0,
-    "Description": "Fine et souple, la barde de porc est un geste, pas un morceau : c’est la main invisible du cuisinier. Elle protège, nourrit, parfume les viandes pendant la cuisson. Sous la chaleur, elle fond lentement, enveloppant la chair d’un jus chaud et brillant. Chaque tranche bardée garde son moelleux et sa saveur beurrée. C’est l’art du soin, la tendresse appliquée au feu.",
-    "CuissonConseillee": "À rôtir lentement à 180 °C pour libérer le gras.",
-    "duree_totale_indicative_hh_mm_ss": "00:30:00",
-    "temperature_a_coeur_c": 69,
-    "Resume_sensoriel": "Gras croustillant, goût beurré et salin, Texture fondante et onctueuse.",
-    "Texture": "Fondante",
-    "Tendrete": 0,
-    "Gout": 10,
-    "Jutosite": 0,
-    "Persillage": 10,
-    "product_url": "https://metscarnes.odoo.com/shop/barde-97",
-    "image_url": "https://metscarnes.odoo.com/web/image/product.product/97/image_1920",
-    "unite": "poids",
-    "quantite_par_personne": 50,
     "poids_unitaire_g": null
   },
   {
@@ -3365,37 +3277,7 @@
     "quantite_par_personne": 200,
     "poids_unitaire_g": null
   },
-  {
-    "Produit": "Gorge de porc",
-    "Categorie": "Porc",
-    "Destination": "A griller",
-    "NutriScore": "E",
-    "Energie": 770,
-    "Proteines": 8,
-    "Lipides": 80,
-    "Glucides": 0,
-    "Sel": 0.1,
-    "Fer": 1,
-    "Zinc": 1,
-    "Selenium": 3,
-    "VitamineB12": 0,
-    "Description": "Grasse et gélatineuse, la gorge de porc est un morceau de caractère. Elle apporte rondeur et onctuosité aux pâtés et ragoûts. En cuisson lente, elle se transforme : le gras fond, le muscle s’attendrit, la saveur s’épanouit. En bouche, c’est un plaisir riche, réconfortant, presque sucré. La gourmandise brute du cochon.",
-    "CuissonConseillee": "À mijoter 3 h à feu doux.",
-    "duree_totale_indicative_hh_mm_ss": "03:00:00",
-    "temperature_a_coeur_c": 69,
-    "Resume_sensoriel": "Chair riche et ferme, goût profond, gras noble et long en bouche.",
-    "Texture": "Ferme",
-    "Tendrete": 1,
-    "Gout": 10,
-    "Jutosite": 6,
-    "Persillage": 10,
-    "product_url": "https://metscarnes.odoo.com/shop/gorge-de-porc-114",
-    "image_url": "https://metscarnes.odoo.com/web/image/product.product/114/image_1920",
-    "unite": "poids",
-    "quantite_par_personne": 100,
-    "poids_unitaire_g": null
-  },
-  {
+    {
     "Produit": "Grenadin de veau",
     "Categorie": "Veau",
     "Destination": "A griller",
@@ -7147,7 +7029,32 @@
   }
 ];
     const loadingMessages = ["Le saviez-vous ? Une viande bien maturée est plus tendre et savoureuse.", "Astuce du chef : Sortez votre viande du frigo 30 minutes avant de la cuire pour une cuisson parfaite.", "Ne piquez jamais une saucisse pendant la cuisson, vous perdriez tout son jus précieux !", "Nous affûtons nos couteaux pour vous préparer un menu aux petits oignons...", "Le secret d'un bon steak ? Une poêle très chaude et un temps de repos après cuisson.", "Le persillage, c'est ce gras qui fond à la cuisson et donne tout son goût à la viande.", "Un peu de patience... Nous sélectionnons les meilleures pièces pour vous."];
-    const questionsConfig=[{id:1,variable:"client_name",type:"text",question:"Comment puis-je vous appeler ? 😊",helper:"Votre prénom pour personnaliser vos recommandations"},{id:2,variable:"meat_preferences",type:"meat_filter",question:"Prêt à sortir de votre zone de confort ?",helper:"Choisissez un style ou personnalisez vos préférences. Les \"Classiques\" incluent : Bœuf, Veau, Agneau, Porc, et les Volailles.",tutorialSteps:[{element:'.answers',intro:"<strong>Étape 1 : Le style.</strong><br>Choisissez un style rapide ici. 'Surprenez-moi' utilise tout notre catalogue, tandis que 'Classiques' se concentre sur les viandes les plus populaires (Bœuf, Veau, Agneau, Porc, Volailles).",position:'bottom'},{element:'.btn-personnaliser',intro:"<strong>Étape 2 : L'affinage.</strong><br>Si vous avez des goûts précis, cliquez ici pour choisir exactement les viandes que vous aimez ou n'aimez pas.",position:'bottom'},{element:'.btn-next-question',intro:"<strong>Étape 3 : La suite.</strong><br>Une fois votre choix fait, cliquez ici pour passer à l'étape suivante !",position:'top'}]},{id:3,variable:"jours_selectionnes",type:"days",question:"Pour quels jours souhaitez-vous planifier vos repas ?",helper:"Sélectionnez un ou plusieurs jours."},{id:4,variable:"repas_par_jour",type:"meals_per_day",question:"Quels repas planifier ?",helper:"Choisissez un raccourci ou personnalisez chaque jour.",tutorialSteps:[{element:'#meal-presets',intro:"<strong>Raccourci :</strong><br>Pour aller vite, choisissez une option qui s'appliquera à tous les jours sélectionnés.",position:'bottom'},{element:'.btn-personnaliser',intro:"<strong>Personnalisation :</strong><br>Ou cliquez ici pour choisir précisément 'Midi' et/ou 'Soir' pour chaque jour.",position:'bottom'},{element:'.btn-next-question',intro:"<strong>Continuez :</strong><br>Cliquez ici une fois votre sélection terminée.",position:'top'}]},{id:5,variable:"nombre_personnes",type:"choice",question:"Pour combien de gourmands cuisinez-vous ?",options:["1 personne","2","3","4","5","6+"],values:[1,2,3,4,5,6],icons:["💃","👫","👨‍👩‍👦","👨‍👩‍👧‍👦","👨‍👩‍👧‍👦","👨‍👩‍👦‍👦"],helper:"Pour calculer les quantités."},{id:6,variable:"temps_par_repas",type:"time_per_meal",question:"Combien de temps avez-vous pour cuisiner ?",helper:"Appliquez un préréglage ou personnalisez.",tutorialSteps:[{element:'#time-presets',intro:"<strong>Votre style :</strong><br>Choisissez un profil de cuisinier qui correspond à vos habitudes.",position:'bottom'},{element:'.btn-personnaliser',intro:"<strong>Dans le détail :</strong><br>Ou personnalisez le temps de préparation pour chaque repas individuellement.",position:'bottom'},{element:'.btn-next-question',intro:"<strong>Validez :</strong><br>Passez à la suite quand vous avez terminé.",position:'top'}]},{id:7,variable:"texture_preferee",type:"choice",question:"Quelle texture vous fait craquer ?",options:["🧈 Tendre et fondant","🍖 Avec du caractère","🍲 Confit qui s'effiloche","💎 Toutes me plaisent"],icons:["🧈","🍖","🍲","💎"]},{id:8,variable:"gout_prefere",type:"choice",question:"Côté saveurs, qu'est-ce qui vous tente ?",options:["🌿 Subtil et délicat","🌶️ Riche et prononcé","🪵 Intense et rustique","✨ Je suis ouvert à tout"],icons:["🌿","🌶️","🪵","✨"]},{id:9,variable:"objectif_nutritionnel",type:"choice",question:"Quelle est votre envie du moment ?",options:["🥗 Léger & Équilibré","🧈 Le plaisir avant tout","💎 Les deux"],icons:["🥗","🧈","💎"]}];
+    const questionsConfig=[ {
+        id: 1,
+        variable: "client_name",
+        type: "text",
+        question: "Comment puis-je vous appeler ? 😊",
+        helper: "Votre prénom pour personnaliser vos recommandations",
+        tutorialSteps: [
+            // ✅ CORRECTION APPLIQUÉE ICI
+            {
+                element: '.header-actions', 
+                intro: "<strong>Vos Outils</strong><br>Avant de commencer, sachez que vous disposez de ces deux boutons à tout moment :<br><br>🔄 pour recommencer le questionnaire.<br>❓ pour relancer l'aide sur l'étape en cours.",
+                position: 'bottom', // 'position' est utilisé pour 'side'
+                align: 'end'      // 'align' est toujours accepté
+            },
+            {
+                element: '#text-answer',
+                intro: "<strong>Bienvenue !</strong><br>Maintenant, entrez simplement votre prénom ici. Cela me permettra de m'adresser à vous personnellement.",
+                position: 'bottom'
+            },
+            {
+                element: '.action-button',
+                intro: "<strong>Ensuite, cliquez ici.</strong><br>Ce bouton vous permettra de valider et de passer à l'étape suivante.",
+                position: 'top'
+            }
+        ]
+    },{id:2,variable:"meat_preferences",type:"meat_filter",question:"Prêt à sortir de votre zone de confort ?",helper:"Choisissez un style ou personnalisez vos préférences. Les \"Classiques\" incluent : Bœuf, Veau, Agneau, Porc, et les Volailles.",tutorialSteps:[{element:'.answers',intro:"<strong>Votre Style de Viande</strong><br>Choisissez un style rapide ici. 'Surprenez-moi' utilise tout notre catalogue, tandis que 'Classiques' se concentre sur les viandes les plus populaires.",position:'bottom'},{element:'.btn-personnaliser',intro:"<strong>Pour les Connaisseurs</strong><br>Si vous avez des goûts précis, cliquez ici pour choisir exactement les viandes que vous aimez ou n'aimez pas.",position:'bottom'}]},{id:3,variable:"jours_selectionnes",type:"days",question:"Pour quels jours souhaitez-vous planifier vos repas ?",helper:"Sélectionnez un ou plusieurs jours.",tutorialSteps:[{element:'.days-grid',intro:"<strong>Planifiez votre semaine</strong><br>Cliquez sur les jours pour lesquels vous souhaitez recevoir des suggestions de repas. Vous pouvez en choisir autant que vous voulez.",position:'top'},{element:'button.action-button',intro:"<strong>Tout cocher (ou décocher)</strong><br>Utilisez ce bouton pour sélectionner rapidement tous les jours de la semaine, ou pour tout effacer.",position:'bottom'}]},{id:4,variable:"repas_par_jour",type:"meals_per_day",question:"Quels repas planifier ?",helper:"Choisissez un raccourci ou personnalisez chaque jour.",tutorialSteps:[{element:'#meal-presets',intro:"<strong>Repas Rapides</strong><br>Pour aller vite, choisissez une option qui s'appliquera à tous les jours que vous avez sélectionnés (ex: uniquement les soirs).",position:'bottom'},{element:'.btn-personnaliser',intro:"<strong>Personnalisation Fine</strong><br>Cliquez ici pour choisir précisément 'Midi' et/ou 'Soir' pour chaque jour, un par un.",position:'bottom'}]},{id:5,variable:"nombre_personnes",type:"choice",question:"Pour combien de gourmands cuisinez-vous ?",helper:"Pour calculer les quantités.",options:["1 personne","2","3","4","5","6+"],values:[1,2,3,4,5,6],icons:["💃","👫","👨‍👩‍👦","👨‍👩‍👧‍👦","👨‍👩‍👧‍👦","👨‍👩‍👦‍👦"],tutorialSteps:[{element:'.answers',intro:"<strong>Nombre de convives</strong><br>Indiquez combien de personnes partageront le repas. Cela nous permettra de calculer les bonnes quantités de viande pour vous.",position:'top'}]},{id:6,variable:"temps_par_repas",type:"time_per_meal",question:"Combien de temps avez-vous pour cuisiner ?",helper:"Appliquez un préréglage ou personnalisez.",tutorialSteps:[{element:'#time-presets',intro:"<strong>Votre Rythme en Cuisine</strong><br>Choisissez un profil qui correspond à vos habitudes. Êtes-vous toujours pressé, ou aimez-vous prendre votre temps ?",position:'bottom'},{element:'.btn-personnaliser',intro:"<strong>Dans le Détail</strong><br>Vous pouvez aussi personnaliser le temps de préparation pour chaque repas individuellement.",position:'bottom'}]},{id:7,variable:"texture_preferee",type:"choice",question:"Quelle texture vous fait craquer ?",options:["🧈 Tendre et fondant","🍖 Avec du caractère","🍲 Confit qui s'effiloche","💎 Toutes me plaisent"],icons:["🧈","🍖","🍲","💎"],tutorialSteps:[{element:'.answers',intro:"<strong>La Sensation en Bouche</strong><br>Préférez-vous une viande qui fond sous la langue, ou quelque chose avec plus de mâche ? Votre choix nous aidera à sélectionner les bons morceaux.",position:'top'}]},{id:8,variable:"gout_prefere",type:"choice",question:"Côté saveurs, qu'est-ce qui vous tente ?",options:["🌿 Subtil et délicat","🌶️ Riche et prononcé","🪵 Intense et rustique","✨ Je suis ouvert à tout"],icons:["🌿","🌶️","🪵","✨"],tutorialSteps:[{element:'.answers',intro:"<strong>Le Caractère du Goût</strong><br>Êtes-vous d'humeur pour des saveurs légères comme le veau ou la volaille, ou plutôt pour le goût affirmé de l'agneau ou du gibier ?",position:'top'}]},{id:9,variable:"objectif_nutritionnel",type:"choice",question:"Quelle est votre envie du moment ?",options:["🥗 Léger & Équilibré","🧈 Le plaisir avant tout","💎 Les deux"],icons:["🥗","🧈","💎"],tutorialSteps:[{element:'.answers',intro:"<strong>Votre Objectif</strong><br>Choisissez 'Léger & Équilibré' pour des viandes maigres, ou 'Le plaisir avant tout' pour des morceaux plus riches et persillés. 'Les deux' nous donnera plus de liberté !",position:'top'}]}];
     const daysOfWeek=[{name:"Lundi",emoji:"😭"},{name:"Mardi",emoji:"😐"},{name:"Mercredi",emoji:"🧒"},{name:"Jeudi",emoji:"🍷"},{name:"Vendredi",emoji:"💃"},{name:"Samedi",emoji:"🎉"},{name:"Dimanche",emoji:"☀️"}];
     const dayOrder=daysOfWeek.map(d=>d.name);const allMeatCategories=["Bœuf","Veau","Agneau","Cheval","Porc","Canard","Caille","Dinde","Poulet","Lapin","Cerf","Sanglier","Pigeon","Perdreau","Perdrix"];const classicMeats=["Bœuf","Veau","Agneau","Porc","Canard","Caille","Dinde","Poulet","Lapin"];
     const resultsTutorialSteps = [ { element: '.results-actions', intro: "Félicitations ! Voici votre menu personnalisé, prêt à être dégusté.", position: 'bottom' }, { element: '.planning-table', intro: "Retrouvez ici une vue d'ensemble de votre semaine. Pratique pour les courses !", position: 'bottom' }, { element: '.meal-item', intro: "✨ <strong>Astuce :</strong> Survolez un plat dans ce tableau pour voir une photo rapide ! Cliquez dessus pour plus de détails (si un lien est disponible).", position: 'top' }, { element: '.results-grid', intro: "Plus bas, vous trouverez le détail de chaque repas avec les quantités calculées pour vous et nos conseils de préparation.", position: 'top' }, { element: '.results-actions', intro: "Quand tout est parfait, vous pouvez <strong>télécharger votre menu en PDF</strong> ou en créer un nouveau.", position: 'bottom' } ];
@@ -7173,10 +7080,10 @@
         init: function() { backBtn.addEventListener('click', () => this.previousQuestion()); this.renderQuestion() },
         updateProgress: function() { const p = Math.round(appState.questionIndex / (questionsConfig.length - 1) * 100) || 0; progressBar.style.width = `${p}%`; progressText.textContent = `${p}%`; backBtn.style.display = appState.questionIndex > 0 ? 'flex' : 'none' },
         renderQuestion: function() {
+            window.scrollTo(0, 0);
             this.updateProgress(); 
             const q = questionsConfig[appState.questionIndex]; 
             if (!q) { this.generateResults(); return }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
             this.updateProfileSummary();
             appContent.style.opacity = '1';
             let h = `<h2 class="question-title">${q.question}</h2><p class="question-helper">${q.helper || ''}</p>`;
@@ -7189,11 +7096,13 @@
                 case 'time_per_meal': h += this.renderTypeTimePerMeal(q); break;
             }
             appContent.innerHTML = h;
-            if (appState.profilClient.wantsTutorial && q.tutorialSteps) {
+            if (appState.questionIndex === 0 && appState.profilClient.wantsTutorial && q.tutorialSteps) {
+                requestAnimationFrame(() => { launchTutorial(q.tutorialSteps); });
+            } else if (appState.profilClient.wantsStepByStepTutorials && q.tutorialSteps) {
                 requestAnimationFrame(() => { launchTutorial(q.tutorialSteps); });
             }
         },
-        calculateScore: function(product, profil, jour, moment) { /* ... (code inchangé) ... */ },
+        calculateScore: function(product, profil, jour, moment) { let score=0;const weights={texture:.3,gout:.25,nutrition:.2,jutosite:.1,destination:.1,aleatoire:.05};let textureScore=0;const texturePref=profil.texture_preferee;if(texturePref==="🧈 Tendre et fondant"){textureScore=product.Tendrete/10*100;if(["Fondante","Tendre","Souple"].includes(product.Texture))textureScore+=20}else if(texturePref==="🍖 Avec du caractère"){textureScore=(10-product.Tendrete)/10*100;if(["Ferme","Fibreuse"].includes(product.Texture))textureScore+=20}else if(texturePref==="🍲 Confit qui s'effiloche"){if(["Gélatineuse","Fondante"].includes(product.Texture))textureScore=100;else textureScore=product.Tendrete/10*60}let goutScore=0;const goutPref=profil.gout_prefere;if(goutPref==="🌶️ Riche et prononcé"){goutScore=product.Gout/10*100}else if(goutPref==="🌿 Subtil et délicat"){goutScore=(10-product.Gout)/10*100}else if(goutPref==="🪵 Intense et rustique"){goutScore=product.Gout/10*80;if(["Gibier","Agneau","Cheval"].includes(product.Categorie))goutScore+=20}let nutritionScore=0;const nutriMap={A:100,B:80,C:60,D:40,E:20};const nutriPref=profil.objectif_nutritionnel;if(nutriPref==="🥗 Léger & Équilibré"){nutritionScore=nutriMap[product.NutriScore]||50;if(product.Lipides<5&&product.Proteines>20)nutritionScore+=10}else if(nutriPref==="🧈 Le plaisir avant tout"){nutritionScore=product.Persillage/10*100;if(["C","D","E"].includes(product.NutriScore))nutritionScore+=20}let jutositeScore=product.Jutosite/10*100;let destScore=50;const tempsDeCuisson=profil.temps_par_repas?.[jour]?.[moment]||'Tranquille';if(tempsDeCuisson==="Express"&&(product.Destination||"").includes("A griller"))destScore+=40;if(tempsDeCuisson==="Passionné"&&((product.Destination||"").includes("A mijoter")||(product.Destination||"").includes("A rôtir")))destScore+=40;if(tempsDeCuisson==="Tranquille")destScore+=20;score=textureScore*weights.texture+goutScore*weights.gout+nutritionScore*weights.nutrition+jutositeScore*weights.jutosite+destScore*weights.destination+Math.random()*100*weights.aleatoire;return Math.max(0,Math.min(score,100)) },
         updateProfileSummary: function() {
             const summaryDiv = document.getElementById('profile-summary');
             if (!summaryDiv) return;
@@ -7212,18 +7121,15 @@
         generateResults: function() {
             progressWrapper.style.display = 'none';
             document.getElementById('profile-summary').style.display = 'none';
-            appContent.style.opacity = '0'; // On cache le contenu avant le chargement
-            
+            appContent.style.opacity = '0';
             const loadingScreen = document.getElementById('loading-screen');
             const loadingText = loadingScreen.querySelector('.loading-text');
             const revealButton = document.getElementById('reveal-button');
             let messageInterval;
             const totalLoadingTime = 3000;
-
             revealButton.disabled = false;
             loadingScreen.classList.remove('is-finished', 'loading-finished');
             loadingScreen.style.display = 'flex';
-            
             let lastMessageIndex = -1;
             const getRandomMessage = () => {
                 let randomIndex;
@@ -7231,11 +7137,9 @@
                 lastMessageIndex = randomIndex;
                 return loadingMessages[randomIndex];
             };
-
             loadingText.innerHTML = getRandomMessage();
             loadingText.style.animation = 'textFadeInOut 1.2s ease-in-out infinite';
             messageInterval = setInterval(() => { loadingText.innerHTML = getRandomMessage(); }, 1200);
-
             setTimeout(() => {
                 clearInterval(messageInterval);
                 loadingText.style.animation = 'none';
@@ -7291,7 +7195,7 @@
         renderTypeChoice:q=>{const c=appState.profilClient[q.variable];return`<div class="answers">${q.options.map((o,i)=>{const v=q.values?q.values[i]:o,is=String(c)===String(v);const escapedV=String(v).replace(/'/g,"\\'");return`<div class="answer-card ${is?'selected':''}" onclick="QuizController.handleAnswer('${escapedV}')"><span class="icon">${q.icons?q.icons[i]:'➡️'}</span><span class="text">${o}</span></div>`}).join('')}</div>`},
         async handleAnswer(a) { const q = questionsConfig[appState.questionIndex]; if (a === '' && q.type === 'text') { await showCustomAlert({ title: "Oups !", text: "Veuillez entrer votre prénom pour que je puisse personnaliser votre expérience." }); return; } appState.profilClient[q.variable] = a; await this.nextQuestion(event); },
         toggleDetailView: function(id) { const detailSection = document.getElementById(id); if (!detailSection) return; const isOpening = !detailSection.classList.contains('visible'); detailSection.classList.toggle('visible'); setTimeout(() => { if (isOpening) { detailSection.scrollIntoView({ behavior: 'smooth', block: 'start' }); } else { const triggerButton = detailSection.previousElementSibling.previousElementSibling; if (triggerButton && triggerButton.classList.contains('btn-personnaliser')) { triggerButton.scrollIntoView({ behavior: 'smooth', block: 'center' }); } } }, 100); },
-        async nextQuestion(event) { if (event) { const clickedButton = event.target.closest('.btn-next-question'); if (clickedButton && clickedButton.classList.contains('is-disabled')) { const q = questionsConfig[appState.questionIndex]; let message = "Veuillez faire un choix avant de continuer."; if (q.type === 'meat_preferences') { message = "Veuillez choisir un style ou personnaliser vos préférences."; } else if (q.type === 'days') { message = "Veuillez sélectionner au moins un jour."; } else if (q.type === 'meals_per_day') { message = "Veuillez sélectionner au moins un repas (midi ou soir)."; } else if (q.type === 'time_per_meal') { message = "Veuillez définir votre style de cuisine ou personnaliser les temps de préparation."; } await showCustomAlert({ title: "Action requise", text: message }); return; } } if (appState.questionIndex === 0 && appState.profilClient.wantsTutorial === undefined) { const wantsHelp = await showCustomConfirm({ title: "Besoin d'un coup de main ?", text: "Souhaitez-vous activer l'aide guidée pour les étapes de personnalisation ?", confirmText: "Oui, avec plaisir !", cancelText: "Non, merci" }); appState.profilClient.wantsTutorial = wantsHelp; } if (appState.questionIndex < questionsConfig.length - 1) { appState.questionIndex++; saveProgress(); this.renderQuestion(); } else { this.generateResults(); } },
+        async nextQuestion(event) { if (event) { const clickedButton = event.target.closest('.btn-next-question'); if (clickedButton && clickedButton.classList.contains('is-disabled')) { const q = questionsConfig[appState.questionIndex]; let message = "Veuillez faire un choix avant de continuer."; if (q.type === 'meat_preferences') { message = "Veuillez choisir un style ou personnaliser vos préférences."; } else if (q.type === 'days') { message = "Veuillez sélectionner au moins un jour."; } else if (q.type === 'meals_per_day') { message = "Veuillez sélectionner au moins un repas (midi ou soir)."; } else if (q.type === 'time_per_meal') { message = "Veuillez définir votre style de cuisine ou personnaliser les temps de préparation."; } await showCustomAlert({ title: "Action requise", text: message }); return; } } if (appState.questionIndex === 0 && appState.profilClient.wantsTutorial && appState.profilClient.wantsStepByStepTutorials) { const continueTutorials = await showCustomConfirm({ title: "Continuer le guide ?", text: "Souhaitez-vous que l'aide continue de s'afficher automatiquement pour les prochaines étapes ? Vous pourrez toujours la lancer manuellement avec le bouton '❓'.", confirmText: "Oui, continuer", cancelText: "Non, c'est bon" }); appState.profilClient.wantsStepByStepTutorials = continueTutorials; } if (appState.questionIndex < questionsConfig.length - 1) { appState.questionIndex++; saveProgress(); this.renderQuestion(); } else { this.generateResults(); } },
         previousQuestion: function() { if (appState.questionIndex > 0) { appState.questionIndex--; this.renderQuestion() } },
         renderPlanningTable: function() {let t=`<table class="planning-table"><thead><tr><th>Jour</th><th>☀️ Midi</th><th>🌙 Soir</th></tr></thead><tbody>`;dayOrder.forEach(d=>{if(appState.generatedMenu[d]){t+=`<tr><td data-label="Jour">${d}</td>`;const m=appState.generatedMenu[d]['Midi'],s=appState.generatedMenu[d]['Soir'],midiHtml=m?`<span class="meal-item" data-img-url="${m.image_url||'https://via.placeholder.com/150/eee/999?text=Image'}" data-product-name="${m.Produit}" data-product-url="${m.product_url||'#'}">${m.Produit}</span>`:'-',soirHtml=s?`<span class="meal-item" data-img-url="${s.image_url||'https://via.placeholder.com/150/eee/999?text=Image'}" data-product-name="${s.Produit}" data-product-url="${s.product_url||'#'}">${s.Produit}</span>`:'-';t+=`<td data-label="Midi">${midiHtml}</td><td data-label="Soir">${soirHtml}</td></tr>`}});return t+'</tbody></table>'},
         renderResultsDetails: function() { let h = ''; if (allProducts.length === 0) return `<p style="text-align:center;color:red"><b>Attention:</b> Base de données de produits vide.</p>`; dayOrder.forEach(j => { if (appState.generatedMenu[j]) { const e = daysOfWeek.find(d => d.name === j)?.emoji || '📅'; h += `<div class="result-day meal-day-section"><h3>${e} ${j}</h3>`; Object.keys(appState.generatedMenu[j]).forEach(m => { const p = appState.generatedMenu[j][m], i = p.image_url || 'https://via.placeholder.com/140x120/eee/999?text=Image', n = parseInt(appState.profilClient.nombre_personnes) || 1, qd = getQuantityDisplay(p, n); h += `<div class="result-meal"><img src="${i}" class="result-meal-img" alt="${p.Produit}"><div class="result-meal-info"><h4>${p.Produit} <span class="meal-time">(${m})</span><span class="meal-quantity">${qd}</span></h4><p>${p.Description || ''}</p>${p.CuissonConseillee ? `<p class="meal-cooking-advice"><b>Conseil:</b> ${p.CuissonConseillee}</p>` : ''}<a href="${p.product_url || '#'}" target="_blank">Découvrir ➔</a></div></div>` }); h += '</div>' } }); return h },
@@ -7299,44 +7203,8 @@
         showTooltip: function(element, ownerId, isHover = false) { const imageUrl = element.dataset.imgUrl; const productName = element.dataset.productName; globalTooltip.dataset.owner = ownerId; globalTooltip.innerHTML = `<img src="${imageUrl}" alt="${productName}">`; const rect = element.getBoundingClientRect(); if (isHover) { const tooltipRect = globalTooltip.getBoundingClientRect(); let top = rect.top - tooltipRect.height - 10; let left = rect.left + rect.width / 2 - tooltipRect.width / 2; if (top < 0) top = rect.bottom + 10; if (left < 0) left = 5; if (left + tooltipRect.width > window.innerWidth) left = window.innerWidth - tooltipRect.width - 5; globalTooltip.style.left = `${left}px`; globalTooltip.style.top = `${top}px`; globalTooltip.style.transform = ''; } else { globalTooltip.style.left = `50%`; globalTooltip.style.top = `50%`; globalTooltip.style.transform = `translate(-50%, -50%)`; } globalTooltip.classList.add('visible'); },
     };
 
-    function revealMenu() {
-        const loadingScreen = document.getElementById('loading-screen');
-        const revealButton = document.getElementById('reveal-button');
-        const appContent = document.getElementById('app-content');
-        revealButton.disabled = true;
-        revealButton.classList.add('is-hiding');
-        loadingScreen.classList.add('is-finished');
-        setTimeout(() => {
-            appContent.style.animation = 'contentReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards';
-        }, 400);
-        setTimeout(() => {
-            loadingScreen.style.display = 'none';
-            appContent.style.opacity = '1'; 
-            appContent.style.animation = ''; 
-            revealButton.classList.remove('is-hiding');
-            if (appState.profilClient.wantsTutorial) {
-                setTimeout(() => { launchTutorial(resultsTutorialSteps); }, 200);
-            }
-        }, 1000);
-    }
-    
-    async function startQuiz() {
-        appState.isQuickStart = false;
-        welcomeScreen.classList.add('hidden');
-        setTimeout(async () => {
-            mainApp.classList.add('visible');
-            const s = loadProgress();
-            if (s && s.profilClient && Object.keys(s.profilClient).length > 0) {
-                const resume = await showCustomConfirm({ title: "Session trouvée", text: "Voulez-vous reprendre la session précédente ?", confirmText: "Reprendre", cancelText: "Recommencer" });
-                if (resume) {
-                    appState.questionIndex = s.questionIndex;
-                    appState.profilClient = s.profilClient;
-                }
-            }
-            QuizController.init();
-        }, 400);
-    }
-
+    function revealMenu() { const loadingScreen = document.getElementById('loading-screen'); const revealButton = document.getElementById('reveal-button'); const appContent = document.getElementById('app-content'); revealButton.disabled = true; revealButton.classList.add('is-hiding'); loadingScreen.classList.add('is-finished'); setTimeout(() => { appContent.style.animation = 'contentReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards'; }, 400); setTimeout(() => { loadingScreen.style.display = 'none'; appContent.style.opacity = '1'; appContent.style.animation = ''; revealButton.classList.remove('is-hiding'); if (appState.profilClient.wantsTutorial) { setTimeout(() => { launchTutorial(resultsTutorialSteps); }, 200); } }, 1000); }
+    async function startQuiz() { appState.isQuickStart = false; welcomeScreen.classList.add('hidden'); setTimeout(async () => { mainApp.classList.add('visible'); const s = loadProgress(); if (s && s.profilClient && Object.keys(s.profilClient).length > 0) { const resume = await showCustomConfirm({ title: "Session trouvée", text: "Voulez-vous reprendre la session précédente ?", confirmText: "Reprendre", cancelText: "Recommencer" }); if (resume) { appState.questionIndex = s.questionIndex; appState.profilClient = s.profilClient; } else { const wantsHelp = await showCustomConfirm({ title: "Besoin d'un coup de main ?", text: "Souhaitez-vous activer l'aide guidée pour vous présenter les étapes clés ?", confirmText: "Oui, avec plaisir !", cancelText: "Non, merci" }); appState.profilClient.wantsTutorial = wantsHelp; appState.profilClient.wantsStepByStepTutorials = wantsHelp; } } else { const wantsHelp = await showCustomConfirm({ title: "Besoin d'un coup de main ?", text: "Souhaitez-vous activer l'aide guidée pour vous présenter les étapes clés ?", confirmText: "Oui, avec plaisir !", cancelText: "Non, merci" }); appState.profilClient.wantsTutorial = wantsHelp; appState.profilClient.wantsStepByStepTutorials = wantsHelp; } QuizController.init(); }, 400); }
     function quickStart() { appState.isQuickStart = true; appState.profilClient = { wantsTutorial: true, client_name: "Ami", jours_selectionnes: daysOfWeek.map(d => d.name), repas_par_jour: {}, nombre_personnes: 2, temps_par_repas: {} }; daysOfWeek.forEach(day => { appState.profilClient.repas_par_jour[day.name] = ["Midi", "Soir"]; appState.profilClient.temps_par_repas[day.name] = { "Midi": "Express", "Soir": "Tranquille" }; }); welcomeScreen.classList.add('hidden'); setTimeout(() => { mainApp.classList.add('visible'); setTimeout(() => { QuizController.generateResults(); }, 500); }, 300); }
     async function resetQuiz() { const wantsToReset = await showCustomConfirm({ title: "Recommencer ?", text: "Êtes-vous sûr de vouloir recommencer ? Votre progression sera perdue.", confirmText: "Oui, recommencer", cancelText: "Annuler" }); if (wantsToReset) { clearProgress(); location.reload(); } }
     async function toggleHelp() { if (progressWrapper.style.display === 'none') { launchTutorial(resultsTutorialSteps); return; } const currentQuestion = questionsConfig[appState.questionIndex]; if (currentQuestion && currentQuestion.tutorialSteps) { launchTutorial(currentQuestion.tutorialSteps); } else { await showCustomAlert({ title: "Aide contextuelle", text: "Il n'y a pas d'aide spécifique disponible pour cette étape." }); } }
