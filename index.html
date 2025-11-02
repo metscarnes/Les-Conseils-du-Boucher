@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🥩 Les Conseils du Boucher - Menu Sur-Mesure</title>
+    <title> Les Conseils du Boucher - Menu Sur-Mesure</title>
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/metscarnes/bimi-metscarnes/main/Logo%20Mets%20Carn%C3%A9s%20HD.png">
 
     <script src="https://cdn.jsdelivr.net/npm/driver.js@latest/dist/driver.js.iife.js"></script>
@@ -66,12 +66,12 @@
 .driver-popover-prev-btn:hover { background: rgba(237, 193, 150, 0.1); border-color: var(--primary); }
 .driver-popover-close-btn { background: transparent; color: var(--text-light); opacity: 0.8; }
 .driver-popover-close-btn:hover { opacity: 1; color: var(--primary); }
-    ..welcome-screen {
-    position: absolute; /* ✅ CHANGÉ: de 'fixed' à 'absolute' */
+   .welcome-screen {
+    position: fixed; /* ✅ Reverti en 'fixed' pour un véritable overlay */
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%; /* ✅ CHANGÉ: de 'min-height: 100vh' à 'height: 100%' */
+    height: 100dvh; /* ✅ LA CORRECTION CLÉ : 'dvh' pour Dynamic Viewport Height */
     background: linear-gradient(135deg, var(--dark) 0%, #0a0a0c 50%, var(--dark-secondary) 100%);
     display: flex;
     flex-direction: column;
@@ -79,8 +79,8 @@
     align-items: center;
     z-index: 9999;
     transition: opacity 1.2s ease, transform 1.2s ease;
-    overflow-y: auto; /* ✅ AJOUTÉ: Permet le scroll si le contenu est trop grand */
-    padding: 2rem 0; /* ✅ AJOUTÉ: Un peu d'espace en haut et en bas */
+    padding: 2rem 1rem; /* ✅ Un peu d'espace pour les petits écrans */
+    overflow: auto; /* ✅ Permet le scroll si le contenu est vraiment trop grand (sécurité) */
 }
     .welcome-screen.hidden { opacity: 0; pointer-events: none; transform: scale(1.1); }
     .welcome-content { text-align: center; max-width: 900px; padding: 2rem 1.5rem; animation: majestueuxSlideUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.3s backwards; position: relative; z-index: 2; }
@@ -334,11 +334,6 @@
     </div>
 
     <script>
-    // ✅ AJOUTEZ CE BLOC AU TOUT DÉBUT DE VOTRE SCRIPT
-    if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
-    }
-    window.scrollTo(0, 0);
         const allProducts = [
   {
     "Produit": "Aiguillette baronne de boeuf",
@@ -7348,12 +7343,6 @@
     async function promptDownloadChoice() { const choice = await showCustomChoice({ title: "Quel format souhaitez-vous ?", text: "Choisissez le type de PDF à télécharger.", option1Text: "Résumé + Détails", option2Text: "Résumé Uniquement", cancelText: "Annuler" }); if (choice === null) return; const includeDetails = (choice === 'option1'); downloadPDF(includeDetails); }
     async function downloadPDF(includeDetails = true) { const element = document.getElementById('pdf-content'); const clientName = appState.profilClient.client_name || 'Gourmand'; const fileName = `Menu_${includeDetails ? 'Complet' : 'Resume'}_${clientName}.pdf`; const opt = { margin: [10, 10, 10, 10], filename: fileName, image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2, useCORS: true }, }; element.classList.add('pdf-export-mode'); if (!includeDetails) { element.classList.add('no-details'); } try { await html2pdf().from(element).set(opt).save(); } finally { element.classList.remove('pdf-export-mode'); element.classList.remove('no-details'); } }
     function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
-</script>
-<!-- ✅ AJOUTEZ CE NOUVEAU BLOC SCRIPT ICI -->
-<script>
-    window.onload = function() {
-        window.scrollTo(0, 0);
-    };
 </script>
 </body>
 </html>
